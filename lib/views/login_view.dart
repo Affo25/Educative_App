@@ -10,21 +10,30 @@ import '../utils/spacing.dart';
 import '../widgets/button/button.dart';
 import '../widgets/text/text.dart';
 import '../widgets/text_field/text_field.dart';
+import '../views/full_app.dart';
+
 class LoginView extends StatefulWidget {
+
+  final emailCtrl = TextEditingController();
+  final passwordCtrl = TextEditingController();
 
   @override
   _LoginViewState createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> {
+
   late ThemeData theme;
   late CustomTheme customTheme;
+  bool showHiddenpassword = true;
+
 
   @override
   void initState() {
     super.initState();
     theme = AppTheme.theme;
     customTheme = AppTheme.customTheme;
+
   }
 
   @override
@@ -48,9 +57,12 @@ class _LoginViewState extends State<LoginView> {
                 prefixIconColor: customTheme.medicarePrimary,
                 labelTextColor: customTheme.medicarePrimary,
                 cursorColor: customTheme.medicarePrimary,
-              ),
+
+
+        ),
               FxSpacing.height(24),
               FxTextField(
+                obscureText: showHiddenpassword,
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 autoFocusedBorder: true,
                 textFieldStyle: FxTextFieldStyle.outlined,
@@ -62,7 +74,11 @@ class _LoginViewState extends State<LoginView> {
                 prefixIconColor: customTheme.medicarePrimary,
                 labelTextColor: customTheme.medicarePrimary,
                 cursorColor: customTheme.medicarePrimary,
-              ),
+                suffixIcon: InkWell(
+                  onTap: togglePassword,
+                    child: Icon(Icons.visibility)),
+
+      ),
               FxSpacing.height(16),
               Align(
                 alignment: Alignment.centerRight,
@@ -71,7 +87,7 @@ class _LoginViewState extends State<LoginView> {
                       Navigator.of(context, rootNavigator: true).push(
                         MaterialPageRoute(
                             builder: (context) =>
-                                LoginView()),
+                                FullApp()),
                       );
                     },
                     splashColor: customTheme.medicarePrimary.withAlpha(40),
@@ -113,6 +129,17 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
+  }
+
+  void togglePassword(){
+    if(showHiddenpassword== true){
+      showHiddenpassword = false;
+    }else{
+      showHiddenpassword = true;
+    }
+    setState(() {
+      showHiddenpassword = !showHiddenpassword;
+    });
   }
 }
 

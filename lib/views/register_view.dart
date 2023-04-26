@@ -1,9 +1,14 @@
 import 'package:educative_app/app_theme.dart';
 import 'package:educative_app/views/login_view.dart';
-import 'package:flutx/flutx.dart';
-import 'package:stacked/stacked.dart';
+ import 'package:stacked/stacked.dart';
 import 'package:flutter/material.dart';
+import '../utils/spacing.dart';
 import '../viewmodels/register_ViewModel.dart';
+import 'package:educative_app/widgets/text_field/text_field.dart';
+
+import '../widgets/button/button.dart';
+import '../widgets/text/text.dart';
+
 
 class RegisterView extends StatelessWidget {
   final nameCtrl = TextEditingController();
@@ -13,9 +18,15 @@ class RegisterView extends StatelessWidget {
   final ageCtrl = TextEditingController();
   final phoneNoCtrl = TextEditingController();
 
+
   final ThemeData themeData = AppTheme.theme;
   final CustomTheme customTheme = AppTheme.customTheme;
-  @override
+  bool showHiddenpassword = true;
+
+
+
+
+   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RegisterViewModel>.reactive(
       viewModelBuilder: () => RegisterViewModel(),
@@ -33,6 +44,7 @@ class RegisterView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 FxTextField(
+
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   autoFocusedBorder: true,
                   textFieldStyle: FxTextFieldStyle.outlined,
@@ -63,6 +75,7 @@ class RegisterView extends StatelessWidget {
                 ),
                 FxSpacing.height(20),
                 FxTextField(
+                  obscureText: showHiddenpassword,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   autoFocusedBorder: true,
                   textFieldStyle: FxTextFieldStyle.outlined,
@@ -74,6 +87,11 @@ class RegisterView extends StatelessWidget {
                   prefixIconColor: customTheme.medicarePrimary,
                   labelTextColor: customTheme.medicarePrimary,
                   cursorColor: customTheme.medicarePrimary,
+                   suffixIcon: InkWell(
+                    //onTap: buildPasswordField,
+                       child: Icon(Icons.visibility)),
+
+
                   controller: passwordCtrl,
                 ),
                 FxSpacing.height(20),
@@ -81,7 +99,7 @@ class RegisterView extends StatelessWidget {
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   autoFocusedBorder: true,
                   textFieldStyle: FxTextFieldStyle.outlined,
-                  textFieldType: FxTextFieldType.name,
+                  textFieldType: FxTextFieldType.gender,
                   filled: true,
                   fillColor: customTheme.medicarePrimary.withAlpha(40),
                   enabledBorderColor: customTheme.medicarePrimary,
@@ -90,6 +108,21 @@ class RegisterView extends StatelessWidget {
                   labelTextColor: customTheme.medicarePrimary,
                   cursorColor: customTheme.medicarePrimary,
                   controller: genderCtrl,
+                ),
+                FxSpacing.height(20),
+                FxTextField(
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  autoFocusedBorder: true,
+                  textFieldStyle: FxTextFieldStyle.outlined,
+                  textFieldType: FxTextFieldType.age,
+                  filled: true,
+                  fillColor: customTheme.medicarePrimary.withAlpha(40),
+                  enabledBorderColor: customTheme.medicarePrimary,
+                  focusedBorderColor: customTheme.medicarePrimary,
+                  prefixIconColor: customTheme.medicarePrimary,
+                  labelTextColor: customTheme.medicarePrimary,
+                  cursorColor: customTheme.medicarePrimary,
+                  controller: ageCtrl,
                 ),
                 FxSpacing.height(20),
                 FxTextField(
@@ -139,6 +172,7 @@ class RegisterView extends StatelessWidget {
                 FxSpacing.height(16),
                 FxButton.text(
                     onPressed: () {
+                      return;
                        Navigator.of(context, rootNavigator: true).push(
                          MaterialPageRoute(
                              builder: (context) => LoginView()),
@@ -155,4 +189,10 @@ class RegisterView extends StatelessWidget {
       ),
     );
   }
+
+
+
+
 }
+
+ 

@@ -16,7 +16,7 @@ import 'dart:ui' as ui show BoxHeightStyle, BoxWidthStyle;
 import 'package:educative_app/theme/text_style.dart';
 import 'package:educative_app/utils/spacing.dart';
 
-enum FxTextFieldType { email, password, name, address, mobileNumber }
+enum FxTextFieldType { email, password, name, address, mobileNumber, age,gender }
 enum FxTextFieldStyle {
   underlined,
   outlined,
@@ -522,6 +522,7 @@ class _FxTextFieldState extends State<FxTextField> {
           labelText = "Name";
           keyboardType = keyboardType ?? TextInputType.text;
           break;
+
         case FxTextFieldType.address:
           prefixIcon = prefixIcon ??
               (autoIcon
@@ -532,6 +533,28 @@ class _FxTextFieldState extends State<FxTextField> {
                   : null);
           labelText = "Address";
           keyboardType = keyboardType ?? TextInputType.streetAddress;
+          break;
+        case FxTextFieldType.gender:
+          prefixIcon = prefixIcon ??
+              (autoIcon
+                  ? Icon(
+                Icons.person,
+                color: prefixIconColor,
+              )
+                  : null);
+          labelText = "Gender";
+          keyboardType = keyboardType ?? TextInputType.text;
+          break;
+        case FxTextFieldType.age:
+          prefixIcon = prefixIcon ??
+              (autoIcon
+                  ? Icon(
+                Icons.child_care,
+                color: prefixIconColor,
+              )
+                  : null);
+          labelText = "Age";
+          keyboardType = keyboardType ?? TextInputType.number;
           break;
         case FxTextFieldType.mobileNumber:
           prefixIcon = prefixIcon ??

@@ -4,7 +4,7 @@ import 'package:educative_app/utils/logger_util.dart';
 
 class ApiService {
   Dio dio = Dio();
-  String baseUrl = "http://localhost:59948/service";
+  String baseUrl = "https://stream.iboothme.pk//service";
 
   Future<ResponseData> loginAdmin(String email, String password) async {
     try {

@@ -1,4 +1,5 @@
 
+import 'package:educative_app/views/dashboard_view.dart';
 import 'package:educative_app/widgets/button/button.dart';
 import 'package:educative_app/widgets/text/text.dart';
 import 'package:educative_app/viewmodels/splashViewModel.dart';
@@ -11,7 +12,6 @@ import '../theme/text_style.dart';
 import '../utils/spacing.dart';
 import 'package:educative_app/app_theme.dart';
 import 'package:educative_app/views/register_view.dart';
-
 
 
 

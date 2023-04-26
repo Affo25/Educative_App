@@ -25,7 +25,7 @@ class Routes {
    static const String splashView = '/';
    static const String registerView = '/Register-view';
    static const String loginView = '/login-view';
-  // static const String startView = '/start-view';
+   static const String dashboardView = '/dashboard-view';
   // static const String syncView = '/sync-view';
   // static const String settingsView = '/settings-view';
   // static const String dataView = '/data-view';
@@ -35,7 +35,7 @@ class Routes {
     splashView,
     registerView,
      loginView,
-    // startView,
+     dashboardView,
     // syncView,
     // settingsView,
     // dataView,
@@ -51,7 +51,7 @@ class StackedRouter extends RouterBase {
      RouteDef(Routes.splashView, page: SplashView),
      RouteDef(Routes.registerView, page: RegisterView),
      RouteDef(Routes.loginView, page: LoginView),
-     //RouteDef(Routes.RegistrationView, page: RegistrationView),
+     RouteDef(Routes.dashboardView, page: DashboardScreen),
     // RouteDef(Routes.syncView, page: SyncView),
     // RouteDef(Routes.settingsView, page: SettingsView),
     // RouteDef(Routes.dataView, page: DataView),
@@ -78,6 +78,14 @@ class StackedRouter extends RouterBase {
         builder: (context) => RegisterView(),
         settings: data,
       );
+
+    },
+    DashboardScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => DashboardScreen(),
+        settings: data,
+      );
+
     }
   };
 }
