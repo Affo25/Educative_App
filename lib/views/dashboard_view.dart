@@ -1,373 +1,301 @@
 import 'package:educative_app/app_theme.dart';
-import 'package:flutx/flutx.dart';
-import '../views/full_app.dart';
+import 'package:educative_app/views/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutx/flutx.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+import 'register_view.dart';
 
 
 
 class DashboardScreen extends StatefulWidget {
+
+
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
-  // int selectedCategory = 0;
-  // List<Category> categoryList = [];
-  // List<Doctor> doctorList = [];
-   late ThemeData theme;
-   late CustomTheme customTheme;
-
-  get selectedCategory => null;
+class _DashboardScreenState extends State<DashboardScreen>
+    with SingleTickerProviderStateMixin {
+  // late List<Category> categories;
+  // late List<Product> products;
+  late CustomTheme customTheme;
+  late ThemeData theme;
 
   @override
-  void initState() {
+  initState() {
     super.initState();
-    theme = AppTheme.theme;
     customTheme = AppTheme.customTheme;
-    // categoryList = Category.categoryList();
-    // doctorList = Doctor.doctorList();
+    theme = AppTheme.theme;
+    // categories = Category.getList();
+    // products = Product.getList();
   }
 
-  Widget _buildSingleCategory(
-      {int? index, String? categoryName, IconData? categoryIcon}) {
-    return Padding(
-      padding: FxSpacing.right(16),
-      child: FxContainer(
-        paddingAll: 8,
-        borderRadiusAll: 8,
-        bordered: true,
-        border: Border.all(color: customTheme.border, width: 1),
-        color: selectedCategory == index
-            ? customTheme.card
-            : theme.scaffoldBackgroundColor,
-        onTap: () {
-          setState(() {
-            //selectedCategory = index!;
-          });
-        },
-        child: Row(
-          children: [
-            FxContainer.rounded(
-              color: theme.colorScheme.onBackground.withAlpha(16),
-              paddingAll: 4,
-              child: Icon(
-                categoryIcon,
-                color: customTheme.medicarePrimary,
-                size: 16,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: ListView(
+          padding: FxSpacing.fromLTRB(0, 48, 0, 70),
+          children: <Widget>[
+            Padding(
+              padding: FxSpacing.horizontal(24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FxText.titleLarge("Hi, Afaq!",
+                      color: theme.colorScheme.onBackground, fontWeight: 600),
+                  InkWell(
+                     // onTap: () {
+                     //   Navigator.of(context).push(MaterialPageRoute<void>(
+                     //       builder: (BuildContext context) {
+                     //         return NotificationDialog();
+                     //       },
+                     //       fullscreenDialog: true));
+                     // },
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: <Widget>[
+                        Icon(
+                          FeatherIcons.bell,
+                          size: 22,
+                          color: theme.colorScheme.onBackground.withAlpha(200),
+                        ),
+                        Positioned(
+                          right: -2,
+                          top: -2,
+                          child: Container(
+                            padding: FxSpacing.zero,
+                            height: 14,
+                            width: 14,
+                            decoration: BoxDecoration(
+                                color: customTheme.groceryPrimary,
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(40))),
+                            child: Center(
+                              child: FxText.labelSmall(
+                                "2",
+                                color: customTheme.groceryOnPrimary,
+                                fontSize: 9,
+                                fontWeight: 500,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
-            FxSpacing.width(8),
-            FxText.labelMedium(
-              categoryName!,
-              fontWeight: 600,
+            FxSpacing.height(8),
+            Padding(
+              padding: FxSpacing.horizontal(24),
+              child: FxText.bodyMedium("What would you Test today?",
+                  color: theme.colorScheme.onBackground,
+                  fontWeight: 500,
+                  xMuted: true),
             ),
+            FxSpacing.height(24),
+            getBannerWidget(),
+            FxSpacing.height(24),
+            Padding(
+              padding: FxSpacing.horizontal(24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FxText.titleMedium("Categories",
+                      letterSpacing: 0,
+                      color: theme.colorScheme.onBackground,
+                      fontWeight: 600),
+                  FxText.bodySmall("See All",
+                      color: theme.colorScheme.onBackground,
+                      fontWeight: 600,
+                      xMuted: true,
+                      letterSpacing: 0),
+                ],
+              ),
+            ),
+            FxSpacing.height(16),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                //children: LoginView(),
+              ),
+            ),
+            FxSpacing.height(24),
+            Padding(
+              padding: FxSpacing.horizontal(24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FxText.titleMedium("Best Selling",
+                      color: theme.colorScheme.onBackground, fontWeight: 600),
+                  FxText.bodySmall("See All",
+                      color: theme.colorScheme.onBackground,
+                      fontWeight: 600,
+                      xMuted: true,
+                      letterSpacing: 0),
+                ],
+              ),
+            ),
+            FxSpacing.height(16),
+            Padding(
+              padding: FxSpacing.horizontal(24),
+              child: Column(
+                //children: buildProducts(),
+              ),
+            )
+          ],
+        ));
+  }
+
+  Widget getBannerWidget() {
+    return FxContainer(
+      color: customTheme.groceryPrimary.withAlpha(28),
+      padding: FxSpacing.all(24),
+      margin: FxSpacing.horizontal(24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FxText.bodyLarge("Enjoy the special offer\nup to 60%",
+              color: customTheme.groceryPrimary,
+              fontWeight: 600,
+              letterSpacing: 0),
+          FxSpacing.height(8),
+          FxText.bodySmall("at 15 - 25 March 2021",
+              color: theme.colorScheme.onBackground.withAlpha(100),
+              fontWeight: 500,
+              letterSpacing: -0.2),
+        ],
+      ),
+    );
+  }
+
+  // List<Widget> buildCategories() {
+  //   List<Widget> list = [];
+  //   list.add(FxSpacing.width(24));
+  //   for (int i = 0; i < categories.length; i++) {
+  //     list.add(getSingleCategory(categories[i]));
+  //     list.add(FxSpacing.width(16));
+  //   }
+  //   return list;
+  // }
+
+  Widget getSingleCategory( category) {
+    String heroTag = FxTextUtils.randomString(10);
+
+    return Hero(
+      tag: heroTag,
+      child: FxContainer(
+        width: 80,
+        onTap: () {
+              PageRouteBuilder(
+                  transitionDuration: Duration(milliseconds: 500),
+                  pageBuilder: (_, __, ___) =>
+                      LoginView());
+        },
+        padding: FxSpacing.all(16),
+        color: category.color,
+        child: Column(
+          children: [
+            Image.asset(
+              category.image,
+              width: 28,
+              height: 28,
+            ),
+            FxSpacing.height(4),
+            FxText.labelSmall(
+              category.title,
+              color: theme.colorScheme.onBackground,
+            )
           ],
         ),
       ),
     );
   }
 
-  // List<Widget> _buildCategoryList() {
+  // List<Widget> buildProducts() {
   //   List<Widget> list = [];
-  //
-  //   list.add(FxSpacing.width(24));
-  //
-  //   for (int i = 0; i < categoryList.length; i++) {
-  //     list.add(_buildSingleCategory(
-  //         index: i,
-  //         categoryName: categoryList[i].category,
-  //         categoryIcon: categoryList[i].categoryIcon));
+  //   for (Product product in products) {
+  //     list.add(getSingleProduct(product));
   //   }
   //   return list;
   // }
 
-  // List<Widget> _buildDoctorList() {
-  //   List<Widget> list = [];
-  //
-  //   list.add(FxSpacing.width(16));
-  //
-  //   for (int i = 0; i < doctorList.length; i++) {
-  //     list.add(_buildSingleDoctor(doctorList[i]));
-  //   }
-  //   return list;
-  // }
+  Widget getSingleProduct( product) {
+    String heroKey = FxTextUtils.randomString(10);
 
-  Widget _buildSingleDoctor() {
-    var doctor;
-    return FxContainer(
-      onTap: () {
-        //Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
-            //builder: (context) => MediCareSingleDoctorScreen(doctor)));
-      },
-      margin: FxSpacing.fromLTRB(24, 0, 24, 16),
-      paddingAll: 16,
-      borderRadiusAll: 8,
-      child: Row(
-        children: [
-          FxContainer(
-             paddingAll: 0,
-             borderRadiusAll: 8,
-             child: ClipRRect(
-               borderRadius: BorderRadius.all(Radius.circular(16)),
-               child: Image(
-                 width: 72,
-                 height: 72,
-                 image: AssetImage(
-                     'assets/images/wnmj.png',
-
-                 ),
-               ),
-             ),
-          ),
-          FxSpacing.width(16),
+    return InkWell(
+       onTap: () {
+            PageRouteBuilder(
+               transitionDuration: Duration(milliseconds: 500),
+                 pageBuilder: (_, __, ___) =>
+                     RegisterView());
+       },
+      child: FxContainer(
+        margin: FxSpacing.bottom(16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FxContainer(
+              color: customTheme.groceryPrimary.withAlpha(32),
+              padding: FxSpacing.all(8),
+              child: Hero(
+                tag: heroKey,
+                child: ClipRRect(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  child: Image.asset(
+                    product.image,
+                    width: 72,
+                    height: 72,
+                  ),
+                ),
+              ),
+            ),
+            FxSpacing.width(16),
             Expanded(
-                child: Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                 FxText.bodyLarge(
-                  doctor.name,
-                  fontWeight: 600,
-                 ),
-                  FxSpacing.height(4),
-                  FxText.bodySmall(
-                    doctor.category,
-                    xMuted: true,
-                  ),
-                  FxSpacing.height(12),
-                  Row(
-                   children: [
-                      FxStarRating(
-                        rating: doctor.ratings,
-                        showInactive: true,
-                        size: 15,
-                       inactiveColor:
-                        theme.colorScheme.onBackground.withAlpha(180),
-                      ),
-                      FxSpacing.width(4),
-                     FxText.bodySmall(
-                        '${doctor.ratings} | ${doctor.reviews} Reviews',
-                       xMuted: true,
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FxText.bodyMedium(product.name,
+                      color: theme.colorScheme.onBackground, fontWeight: 600),
+                  FxSpacing.height(8),
+                  FxText.labelSmall(product.description,
+                      color: theme.colorScheme.onBackground, muted: true),
+                  FxSpacing.height(8),
+                  product.discountedPrice != product.price
+                      ? Row(
+                    children: [
+                      FxText.bodySmall(
+                          "\$${FxTextUtils.doubleToString(product.price)}",
+                          decoration: TextDecoration.lineThrough,
+                          fontWeight: 500),
+                      // Space.width(8),
+                      FxSpacing.width(8),
+                      FxText.bodyMedium(
+                          "\$${FxTextUtils.doubleToString(
+                              product.discountedPrice)}",
+                          color: theme.colorScheme.onBackground,
+                          fontWeight: 700),
                     ],
-                  ),
+                  )
+                      : FxText.bodyMedium(
+                      "\$${FxTextUtils.doubleToString(product.price)}",
+                      color: theme.colorScheme.onBackground,
+                      fontWeight: 700),
                 ],
               ),
             ),
+            // Space.width(8),
+            Icon(
+              MdiIcons.heartOutline,
+              color: customTheme.groceryPrimary,
+              size: 18,
+            )
           ],
         ),
-      );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView(
-        padding: FxSpacing.top(48),
-        children: [
-          Padding(
-            padding: FxSpacing.horizontal(24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FxSpacing.width(8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FxText.bodySmall(
-                      'Current Location',
-                      color: theme.colorScheme.onBackground,
-                      xMuted: true,
-                      fontSize: 10,
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          color: customTheme.medicarePrimary,
-                          size: 12,
-                        ),
-                        FxSpacing.width(4),
-                        FxText.bodySmall(
-                          'Semarang, INA',
-                          color: theme.colorScheme.onBackground,
-                          fontWeight: 600,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                FxContainer(
-                  paddingAll: 4,
-                  borderRadiusAll: 4,
-                  color: customTheme.card,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: <Widget>[
-                      Icon(
-                        FeatherIcons.bell,
-                        size: 20,
-                        color: theme.colorScheme.onBackground.withAlpha(200),
-                      ),
-                      Positioned(
-                        right: 2,
-                        top: 2,
-                        child: FxContainer.rounded(
-                          paddingAll: 4,
-                          color: customTheme.medicarePrimary,
-                          child: Container(),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FxSpacing.height(24),
-          Padding(
-            padding: FxSpacing.horizontal(24),
-            child: FxTextField(
-              focusedBorderColor: customTheme.medicarePrimary,
-              cursorColor: customTheme.medicarePrimary,
-              textFieldStyle: FxTextFieldStyle.outlined,
-              labelText: 'Search a doctor or health issue',
-              labelStyle: FxTextStyle.bodySmall(
-                  color: theme.colorScheme.onBackground, xMuted: true),
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              filled: true,
-              fillColor: customTheme.card,
-              prefixIcon: Icon(
-                FeatherIcons.search,
-                color: customTheme.medicarePrimary,
-                size: 20,
-              ),
-            ),
-          ),
-          FxSpacing.height(24),
-          Padding(
-            padding: FxSpacing.horizontal(24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FxText.bodyMedium(
-                  'Upcoming Schedule',
-                  fontWeight: 700,
-                ),
-                FxText.bodySmall(
-                  'See all',
-                  color: customTheme.medicarePrimary,
-                  fontSize: 10,
-                ),
-              ],
-            ),
-          ),
-          FxSpacing.height(24),
-          FxContainer(
-            borderRadiusAll: 8,
-            margin: FxSpacing.horizontal(24),
-            color: customTheme.medicarePrimary,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    FxContainer(
-                      paddingAll: 0,
-                      borderRadiusAll: 8,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        child: Image(
-                          height: 40,
-                          width: 40,
-                          image: AssetImage(
-                            'assets/images/profile/avatar_3.jpg',
-                          ),
-                        ),
-                      ),
-                    ),
-                    FxSpacing.width(16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          FxText.bodySmall(
-                            'Dr.Haley lawrence',
-                            color: customTheme.medicareOnPrimary,
-                            fontWeight: 700,
-                          ),
-                          FxText.bodySmall(
-                            'Dermatologists',
-                            fontSize: 10,
-                            color: customTheme.medicareOnPrimary.withAlpha(200),
-                          ),
-                        ],
-                      ),
-                    ),
-                    FxSpacing.width(16),
-                    FxContainer.rounded(
-                      paddingAll: 4,
-                      color: customTheme.medicareOnPrimary,
-                      child: Icon(
-                        Icons.videocam_outlined,
-                        color: customTheme.medicarePrimary,
-                        size: 16,
-                      ),
-                    ),
-                  ],
-                ),
-                FxSpacing.height(16),
-                FxContainer(
-                  borderRadiusAll: 8,
-                  color: theme.colorScheme.onBackground.withAlpha(30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.watch_later,
-                        color: customTheme.medicareOnPrimary.withAlpha(160),
-                        size: 20,
-                      ),
-                      FxSpacing.width(8),
-                      FxText.bodySmall(
-                        'Sun, Jan 19, 08:00am - 10:00am',
-                        color: customTheme.medicareOnPrimary,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FxSpacing.height(24),
-          Padding(
-            padding: FxSpacing.horizontal(24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                FxText.bodyMedium(
-                  'Let\'s find your doctor',
-                  fontWeight: 700,
-                ),
-                Icon(
-                  Icons.tune_outlined,
-                  color: customTheme.medicarePrimary,
-                  size: 20,
-                ),
-              ],
-            ),
-          ),
-          FxSpacing.height(24),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              //children: _buildCategoryList(),
-            ),
-          ),
-          FxSpacing.height(16),
-          Column(
-            //children: _buildDoctorList(),
-          ),
-        ],
       ),
     );
   }

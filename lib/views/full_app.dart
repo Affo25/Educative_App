@@ -47,12 +47,12 @@ class _FullAppState extends State<FullApp> {
             iconData: Icons.house_outlined,
           ),
           FxBottomNavigationBarItem(
-            page: RegisterView(),
+            page: LoginView(),
             activeIconData: Icons.date_range,
             iconData: Icons.date_range_outlined,
           ),
           FxBottomNavigationBarItem(
-            page: DashboardScreen(),
+            page: RegisterView(),
             activeIconData: Icons.chat_bubble,
             iconData: Icons.chat_bubble_outline_rounded,
           ),

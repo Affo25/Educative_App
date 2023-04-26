@@ -12,33 +12,29 @@ import '../widgets/text/text.dart';
 import '../widgets/text_field/text_field.dart';
 import '../views/full_app.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends StatelessWidget {
 
   final emailCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
 
-  @override
-  _LoginViewState createState() => _LoginViewState();
-}
 
-class _LoginViewState extends State<LoginView> {
-
-  late ThemeData theme;
-  late CustomTheme customTheme;
+  final ThemeData themeData = AppTheme.theme;
+  final CustomTheme customTheme = AppTheme.customTheme;
   bool showHiddenpassword = true;
 
 
-  @override
-  void initState() {
-    super.initState();
-    theme = AppTheme.theme;
-    customTheme = AppTheme.customTheme;
-
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ViewModelBuilder<LoginViewModel>.reactive(
+      viewModelBuilder: () => LoginViewModel(),
+      builder: (context, model, child) => WillPopScope(
+          onWillPop: () {
+            return Future(
+                  () => false,
+            );
+          },
+    child: Scaffold(
       body: Center(
         child: Padding(
           padding: FxSpacing.horizontal(16),
@@ -57,7 +53,7 @@ class _LoginViewState extends State<LoginView> {
                 prefixIconColor: customTheme.medicarePrimary,
                 labelTextColor: customTheme.medicarePrimary,
                 cursorColor: customTheme.medicarePrimary,
-
+                controller: emailCtrl,
 
         ),
               FxSpacing.height(24),
@@ -75,8 +71,9 @@ class _LoginViewState extends State<LoginView> {
                 labelTextColor: customTheme.medicarePrimary,
                 cursorColor: customTheme.medicarePrimary,
                 suffixIcon: InkWell(
-                  onTap: togglePassword,
+                  //onTap: togglePassword,
                     child: Icon(Icons.visibility)),
+                controller: passwordCtrl,
 
       ),
               FxSpacing.height(16),
@@ -128,18 +125,11 @@ class _LoginViewState extends State<LoginView> {
           ),
         ),
       ),
+    ),
+    ),
     );
   }
 
-  void togglePassword(){
-    if(showHiddenpassword== true){
-      showHiddenpassword = false;
-    }else{
-      showHiddenpassword = true;
-    }
-    setState(() {
-      showHiddenpassword = !showHiddenpassword;
-    });
-  }
+
 }
 

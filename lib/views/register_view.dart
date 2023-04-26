@@ -172,7 +172,7 @@ class RegisterView extends StatelessWidget {
                 FxSpacing.height(16),
                 FxButton.text(
                     onPressed: () {
-                      return;
+
                        Navigator.of(context, rootNavigator: true).push(
                          MaterialPageRoute(
                              builder: (context) => LoginView()),
