@@ -15,6 +15,8 @@ class LoginViewModel extends BaseViewModel {
   final _snackbarService = locator<SnackbarService>();
   final _apiService = locator<ApiService>();
   final _databaseService = locator<DatabaseService>();
+  bool _showPass=false;
+  bool get ShowPass => _showPass;
 
   Future<void> login(username, password) async {
     setBusy(true);
@@ -56,5 +58,10 @@ class LoginViewModel extends BaseViewModel {
       title: 'Incomplete fields',
       duration: Duration(seconds: 2),
     );
+  }
+  void toggelPassword() async{
+    _showPass = !_showPass;
+    print(ShowPass);
+    notifyListeners();
   }
 }

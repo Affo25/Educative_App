@@ -1,34 +1,27 @@
 import 'package:educative_app/app_theme.dart';
+import 'package:educative_app/views/New_Question.dart';
+import 'package:educative_app/views/profile.dart';
 import 'package:flutx/flutx.dart';
 import 'package:flutter/material.dart';
-import '../views/login_view.dart';
-import '../views/register_view.dart';
 import '../views/dashboard_view.dart';
-import '../views/splash.dart';
+import 'Nvbar.dart';
+import 'subcategory.dart';
 
 
-class FullApp extends StatefulWidget {
-  @override
-  _FullAppState createState() => _FullAppState();
-}
+class FullApp extends StatelessWidget {
 
-class _FullAppState extends State<FullApp> {
-  late ThemeData theme;
-  late CustomTheme customTheme;
 
-  @override
-  void initState() {
-    super.initState();
-    theme = AppTheme.theme;
-    customTheme = AppTheme.customTheme;
-  }
+
+  final ThemeData themeData = AppTheme.theme;
+  final CustomTheme customTheme = AppTheme.customTheme;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FxBottomNavigationBar(
         containerDecoration: BoxDecoration(
-          color: customTheme.card,
+          color: customTheme.border,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16), topRight: Radius.circular(16)),
         ),
@@ -39,7 +32,7 @@ class _FullAppState extends State<FullApp> {
         activeIconSize: 24,
         iconSize: 24,
         activeIconColor: customTheme.medicarePrimary,
-        iconColor: theme.colorScheme.onBackground.withAlpha(140),
+        iconColor: themeData.colorScheme.onBackground.withAlpha(140),
         itemList: [
           FxBottomNavigationBarItem(
             page: DashboardScreen(),
@@ -47,17 +40,17 @@ class _FullAppState extends State<FullApp> {
             iconData: Icons.house_outlined,
           ),
           FxBottomNavigationBarItem(
-            page: LoginView(),
+            page: CourseTasksScreen(),
             activeIconData: Icons.date_range,
             iconData: Icons.date_range_outlined,
           ),
           FxBottomNavigationBarItem(
-            page: RegisterView(),
+            page: Questionscreen(),
             activeIconData: Icons.chat_bubble,
-            iconData: Icons.chat_bubble_outline_rounded,
+            iconData: Icons.add,
           ),
           FxBottomNavigationBarItem(
-            page: SplashView(),
+            page: ProfileScreen(),
             activeIconData: Icons.person,
             iconData: Icons.person_outline_rounded,
           ),

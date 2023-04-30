@@ -15,6 +15,8 @@ class CustomTheme {
   static final Color yellow = Color(0xfffff44f);
   static final Color orange = Color(0xffFFA500);
 
+
+
   final Color card,
       cardDark,
       border,
@@ -105,7 +107,7 @@ class CustomTheme {
 
     //Color
     this.lightBlack = const Color(0xffa7a7a7),
-    this.indigo = const Color(0xff4B0082),
+     this.indigo = const Color(0xff4B0082),
     this.violet = const Color(0xff9400D3),
 
     //Medicare Color Scheme

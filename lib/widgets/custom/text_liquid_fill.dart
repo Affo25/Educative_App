@@ -6,9 +6,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
-import '../../theme/text_style.dart';
-import '../text/text.dart';
+import 'package:flutx/flutx.dart';
 
 class TextLiquidFill extends StatefulWidget {
   final TextStyle? textStyle;

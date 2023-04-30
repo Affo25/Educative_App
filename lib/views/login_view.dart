@@ -3,6 +3,7 @@ import 'package:educative_app/viewmodels/login_ViewModel.dart';
 import 'package:educative_app/views/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:educative_app/app_theme.dart';
 import '../theme/custom_theme.dart';
@@ -16,11 +17,9 @@ class LoginView extends StatelessWidget {
 
   final emailCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
-
-
+  bool _passwordVisible = false;
   final ThemeData themeData = AppTheme.theme;
   final CustomTheme customTheme = AppTheme.customTheme;
-  bool showHiddenpassword = true;
 
 
 
@@ -58,7 +57,7 @@ class LoginView extends StatelessWidget {
         ),
               FxSpacing.height(24),
               FxTextField(
-                obscureText: showHiddenpassword,
+                obscureText: _passwordVisible,
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 autoFocusedBorder: true,
                 textFieldStyle: FxTextFieldStyle.outlined,
@@ -70,11 +69,19 @@ class LoginView extends StatelessWidget {
                 prefixIconColor: customTheme.medicarePrimary,
                 labelTextColor: customTheme.medicarePrimary,
                 cursorColor: customTheme.medicarePrimary,
-                suffixIcon: InkWell(
-                  //onTap: togglePassword,
-                    child: Icon(Icons.visibility)),
-                controller: passwordCtrl,
+                prefixIcon: Icon(MdiIcons.lockOutline),
+                suffixIcon: IconButton(
+                  icon: Icon(_passwordVisible
+                      ? MdiIcons.eyeOutline
+                      : MdiIcons.eyeOffOutline),
+                  onPressed: () {
+                    setState(() {
+                      _passwordVisible = !_passwordVisible;
+                    });
+                  },
+                ),
 
+                controller: passwordCtrl,
       ),
               FxSpacing.height(16),
               Align(
@@ -129,6 +136,8 @@ class LoginView extends StatelessWidget {
     ),
     );
   }
+
+  void setState(Null Function() param0) {}
 
 
 }

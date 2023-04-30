@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../text/text.dart';
+import 'package:flutx/flutx.dart';
 
 class CustomBottomNavigation extends StatelessWidget {
   final int selectedIndex;

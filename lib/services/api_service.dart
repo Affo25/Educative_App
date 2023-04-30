@@ -4,12 +4,12 @@ import 'package:educative_app/utils/logger_util.dart';
 
 class ApiService {
   Dio dio = Dio();
-  String baseUrl = "https://stream.iboothme.pk//service";
+  String baseUrl = "https://stream.iboothme.pk/service/remote/login-user";
 
   Future<ResponseData> loginAdmin(String email, String password) async {
     try {
       Response response = await dio.post(
-        baseUrl + '/user/login',
+        baseUrl + '/user-login',
         data: {
           'Email': email,
           'Password': password,
