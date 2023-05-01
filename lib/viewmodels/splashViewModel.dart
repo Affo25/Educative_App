@@ -14,7 +14,7 @@ class SplashVModel extends BaseViewModel
   void init() async {
     ResponseData response = await _databaseService.loadUser();
 
-    if (response.status == "OK") {
+    if (response.Status == "OK") {
       Future.delayed(Duration(seconds: 20), () {
         logger("Admin logged in already");
         _navigationService.pushNamedAndRemoveUntil(Routes.loginView);

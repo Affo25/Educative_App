@@ -22,10 +22,10 @@ class LoginViewModel extends BaseViewModel {
     setBusy(true);
     ResponseData response = await _apiService.loginAdmin(username, password);
 
-    if (response.status == "ERROR") {
+    if (response.Status == "ERROR") {
       logger("Error logging in admin");
       _snackbarService.showSnackbar(
-        message: response.message,
+        message: response.Message,
         title: 'Something went wrong',
         duration: Duration(seconds: 2),
       );
@@ -33,14 +33,14 @@ class LoginViewModel extends BaseViewModel {
       return;
     }
 
-    UserData admin = UserData.fromJson(response.data[0]);
+    UserData admin = UserData.fromJson(response.Data[0]);
 
     response = await _databaseService.saveUser(admin);
 
-    if (response.status == "ERROR") {
+    if (response.Status == "ERROR") {
       logger("Error saving admin");
       _snackbarService.showSnackbar(
-        message: response.message,
+        message: response.Message,
         title: 'Something went wrong',
         duration: Duration(seconds: 2),
       );

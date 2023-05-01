@@ -1,206 +1,211 @@
 
 
 import 'package:educative_app/app_theme.dart';
+import 'package:educative_app/viewmodels/dashboard_viewmodel.dart';
 import 'package:educative_app/views/Nvbar.dart';
 import 'package:educative_app/widgets/material/navigation/navigation_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutx/flutx.dart';
+import 'package:stacked/stacked.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class DashboardScreen extends StatelessWidget {
-
-
-
   final ThemeData themeData = AppTheme.theme;
   final CustomTheme customTheme = AppTheme.customTheme;
 
-
-  double findAspectRatio(double width) {
-    //Logic for aspect ratio of grid view
-    return (width / 2 - 24) / ((width / 2 - 24) + 40);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: NavigationDrawerWidget(),
-        appBar: AppBar(
-           elevation: 10,
-           title: FxText.bodyLarge("Tasks",
-               color: themeData.colorScheme.onBackground, fontWeight: 600),
-           automaticallyImplyLeading: false,
-           centerTitle: true,
-         ),
-        resizeToAvoidBottomInset: false,
-        body: ListView(
-          padding: FxSpacing.top(FxSpacing.safeAreaTop(context) + 20),
-          children: <Widget>[
-            Container(
-              margin: FxSpacing.horizontal(24),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: FxContainer(
-                      borderRadiusAll: 4,
-                      padding: FxSpacing.all(6),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.only(left: 16),
-                              child: TextField(
-                                style: FxTextStyle.bodyMedium(
-                                    letterSpacing: 0,
-                                    color: themeData.colorScheme.onBackground,
-                                    fontWeight: 500),
-                                decoration: InputDecoration(
-                                  fillColor: customTheme.card,
-                                  hintText: "Search courses skills and videos",
-                                  hintStyle: FxTextStyle.bodySmall(
-                                      letterSpacing: 0,
-                                      color: themeData.colorScheme.onBackground,
-                                      fontWeight: 500),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(8),
+    return ViewModelBuilder<DashboardViewModel>.reactive(
+      viewModelBuilder: () => DashboardViewModel(),
+      onViewModelReady: (model)=> model.Init(),
+      builder: (context, model, child) =>
+          WillPopScope(
+              onWillPop: () {
+                return Future(
+                      () => false,
+                );
+              },
+              child: Scaffold(
+                  drawer: NavigationDrawerWidget(),
+                  appBar: AppBar(
+                    elevation: 10,
+                    title: FxText.bodyLarge("Tasks",
+                        color: themeData.colorScheme.onBackground, fontWeight: 600),
+                    automaticallyImplyLeading: false,
+                    centerTitle: true,
+                  ),
+                  resizeToAvoidBottomInset: false,
+                  body: ListView(
+                    padding: FxSpacing.top(FxSpacing.safeAreaTop(context) + 20),
+                    children: <Widget>[
+                      Container(
+                        margin: FxSpacing.horizontal(24),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: FxContainer(
+                                borderRadiusAll: 4,
+                                padding: FxSpacing.all(6),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 16),
+                                        child: TextField(
+                                          style: FxTextStyle.bodyMedium(
+                                              letterSpacing: 0,
+                                              color: themeData.colorScheme.onBackground,
+                                              fontWeight: 500),
+                                          decoration: InputDecoration(
+                                            fillColor: customTheme.card,
+                                            hintText: "Search courses skills and videos",
+                                            hintStyle: FxTextStyle.bodySmall(
+                                                letterSpacing: 0,
+                                                color: themeData.colorScheme.onBackground,
+                                                fontWeight: 500),
+                                            border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(8),
+                                                ),
+                                                borderSide: BorderSide.none),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(8),
+                                                ),
+                                                borderSide: BorderSide.none),
+                                            focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(8),
+                                                ),
+                                                borderSide: BorderSide.none),
+                                            isDense: true,
+                                            contentPadding: EdgeInsets.all(0),
+                                          ),
+                                          textInputAction: TextInputAction.search,
+                                          textCapitalization:
+                                          TextCapitalization.sentences,
+                                        ),
                                       ),
-                                      borderSide: BorderSide.none),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(8),
+                                    ),
+                                    FxContainer.none(
+                                      paddingAll: 6,
+                                      color: themeData.colorScheme.primary,
+                                      borderRadiusAll: 4,
+                                      child: Icon(
+                                        MdiIcons.magnify,
+                                        color: themeData.colorScheme.onPrimary,
+                                        size: 16,
                                       ),
-                                      borderSide: BorderSide.none),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(8),
-                                      ),
-                                      borderSide: BorderSide.none),
-                                  isDense: true,
-                                  contentPadding: EdgeInsets.all(0),
+                                    )
+                                  ],
                                 ),
-                                textInputAction: TextInputAction.search,
-                                textCapitalization:
-                                TextCapitalization.sentences,
                               ),
                             ),
-                          ),
-                          FxContainer.none(
-                            paddingAll: 6,
-                            color: themeData.colorScheme.primary,
-                            borderRadiusAll: 4,
-                            child: Icon(
-                              MdiIcons.magnify,
-                              color: themeData.colorScheme.onPrimary,
-                              size: 16,
-                            ),
-                          )
-                        ],
+                            FxContainer.bordered(
+                              onTap: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext buildContext) {
+                                      return FilterWidget();
+                                    });
+                              },
+                              margin: EdgeInsets.only(left: 16),
+                              borderRadiusAll: 4,
+                              color: Colors.transparent,
+                              padding: EdgeInsets.all(8),
+                              child: Icon(
+                                MdiIcons.tune,
+                                color: themeData.colorScheme.primary,
+                                size: 20,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ),
-                  FxContainer.bordered(
-                    onTap: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (BuildContext buildContext) {
-                            return FilterWidget();
-                          });
-                    },
-                    margin: EdgeInsets.only(left: 16),
-                    borderRadiusAll: 4,
-                    color: Colors.transparent,
-                    padding: EdgeInsets.all(8),
-                    child: Icon(
-                      MdiIcons.tune,
-                      color: themeData.colorScheme.primary,
-                      size: 20,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin: FxSpacing.fromLTRB(20, 20, 0, 0),
-              child: FxText.titleMedium("Category",
-                  color: themeData.colorScheme.onBackground, fontWeight: 700),
-            ),
-            Container(
-              margin: FxSpacing.fromLTRB(20, 20, 24, 0),
-              child: GridView.count(
-                physics: ClampingScrollPhysics(),
-                padding: FxSpacing.zero,
-                crossAxisCount: 2,
-                shrinkWrap: true,
-                childAspectRatio: 2,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                children: <Widget>[
-                  singleCategory(
-                      title: "UI",
-                      image: 'assets/images/afaq.jpg',
-                      courses: 25),
-                  singleCategory(
-                      title: "Business",
-                      image: 'assets/images/back.jpg',
-                      courses: 80),
-                  singleCategory(
-                      title: "Lifestyle",
-                      image: 'assets/images/nrt.png',
-                      courses: 120),
-                  singleCategory(
-                      title: "Marketing",
-                      image: 'assets/images/nrt.png',
-                      courses: 50),
-                  singleCategory(
-                      title: "UX",
-                      image: 'assets/images/afaq.jpg',
-                      courses: 145),
-                  singleCategory(
-                      title: "Social",
-                      image: 'assets/images/avatar_3.jpg',
-                      courses: 15),
-                ],
-              ),
-            ),
-            Container(
-              margin: FxSpacing.fromLTRB(20, 20, 20, 0),
-              child: FxText.titleMedium("Recommended",
-                  color: themeData.colorScheme.onBackground, fontWeight: 700),
-            ),
-            GridView.count(
-              physics: ClampingScrollPhysics(),
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              padding: FxSpacing.all(20),
-              childAspectRatio:
-              findAspectRatio(MediaQuery.of(context).size.width),
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-              children: <Widget>[
-                singleResult(
-                    title: "React",
-                    image: 'assets/images/afaq.jpg',
-                    price: 148),
-                singleResult(
-                    title: "Flutter",
-                    image: "assets/images/avatar_3.jpg",
-                    price: 259),
-                singleResult(
-                    title: "Web",
-                    image: "assets/images/afaq.jpg",
-                    price: 59),
-                singleResult(
-                    title: "UI / UX",
-                    image: "assets/images/avatar_3.jpg",
-                    price: 99),
-                singleResult(
-                    title: "React Native",
-                    image: "assets/images/splashScreen.png",
-                    price: 59),
-              ],
-            )
-          ],
-        ));
+                      Container(
+                        margin: FxSpacing.fromLTRB(20, 20, 0, 0),
+                        child: FxText.titleMedium("Category",
+                            color: themeData.colorScheme.onBackground, fontWeight: 700),
+                      ),
+                      Container(
+                        margin: FxSpacing.fromLTRB(20, 20, 24, 0),
+                        child: GridView.count(
+                          physics: ClampingScrollPhysics(),
+                          padding: FxSpacing.zero,
+                          crossAxisCount: 2,
+                          shrinkWrap: true,
+                          childAspectRatio: 2,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                          children: <Widget>[
+                            singleCategory(
+                                title: "UI",
+                                image: 'assets/images/afaq.jpg',
+                                courses: 25),
+                            singleCategory(
+                                title: "Business",
+                                image: 'assets/images/back.jpg',
+                                courses: 80),
+                            singleCategory(
+                                title: "Lifestyle",
+                                image: 'assets/images/nrt.png',
+                                courses: 120),
+                            singleCategory(
+                                title: "Marketing",
+                                image: 'assets/images/nrt.png',
+                                courses: 50),
+                            singleCategory(
+                                title: "UX",
+                                image: 'assets/images/afaq.jpg',
+                                courses: 145),
+                            singleCategory(
+                                title: "Social",
+                                image: 'assets/images/avatar_3.jpg',
+                                courses: 15),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: FxSpacing.fromLTRB(20, 20, 20, 0),
+                        child: FxText.titleMedium("Recommended",
+                            color: themeData.colorScheme.onBackground, fontWeight: 700),
+                      ),
+                      GridView.count(
+                        physics: ClampingScrollPhysics(),
+                        crossAxisCount: 2,
+                        shrinkWrap: true,
+                        padding: FxSpacing.all(20),
+                        childAspectRatio:
+                        findAspectRatio(MediaQuery.of(context).size.width),
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
+                        children: <Widget>[
+                          singleResult(
+                              title: "React",
+                              image: 'assets/images/afaq.jpg',
+                              price: 148),
+                          singleResult(
+                              title: "Flutter",
+                              image: "assets/images/avatar_3.jpg",
+                              price: 259),
+                          singleResult(
+                              title: "Web",
+                              image: "assets/images/afaq.jpg",
+                              price: 59),
+                          singleResult(
+                              title: "UI / UX",
+                              image: "assets/images/avatar_3.jpg",
+                              price: 99),
+                          singleResult(
+                              title: "React Native",
+                              image: "assets/images/splashScreen.png",
+                              price: 59),
+                        ],
+                      )
+                    ],
+                  ))
+          ),
+    );
   }
 
   Widget singleResult(
@@ -293,6 +298,12 @@ class DashboardScreen extends StatelessWidget {
       ),
     );
   }
+
+}
+
+double findAspectRatio(double width) {
+  //Logic for aspect ratio of grid view
+  return (width / 2 - 24) / ((width / 2 - 24) + 40);
 }
 
 class FilterWidget extends StatefulWidget {

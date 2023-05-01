@@ -4,12 +4,12 @@ import 'package:educative_app/utils/logger_util.dart';
 
 class ApiService {
   Dio dio = Dio();
-  String baseUrl = "https://stream.iboothme.pk/service/remote/login-user";
+  String baseUrl = "https://stream.iboothme.pk/service/remote";
 
   Future<ResponseData> loginAdmin(String email, String password) async {
     try {
       Response response = await dio.post(
-        baseUrl + '/user-login',
+        '$baseUrl/user-login',
         data: {
           'Email': email,
           'Password': password,
@@ -34,7 +34,7 @@ class ApiService {
   Future<ResponseData> signupUser(Map<String, dynamic> userData) async {
     try {
       Response response = await dio.post(
-        baseUrl + '/user/register',
+        '$baseUrl/add-user', // we have to create new api
         data: userData,
       );
 
@@ -53,6 +53,26 @@ class ApiService {
     }
   }
 
+  Future<ResponseData> getCategories() async {
+    try {
+      Response response = await dio.post(
+        '$baseUrl/categories'
+      );
+
+      var status = response.data['Status'];
+
+      if (status == "ERROR") {
+        logger('signupUser: ERROR');
+        return ResponseData('ERROR', response.data['Message'], []);
+      }
+
+      logger('signupUser: OK');
+      return ResponseData('OK', 'Success', response.data['Data']);
+    } on DioError catch (e) {
+      logger('signupUser: ERROR - $e');
+      return ResponseData('ERROR', 'Failed', e.message);
+    }
+  }
   // Future<ResponseData> uploadData(List<UserData> userList) async {
   //   try {
   //     Response response = await dio.post(

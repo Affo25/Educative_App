@@ -21,8 +21,6 @@ class LoginView extends StatelessWidget {
   final ThemeData themeData = AppTheme.theme;
   final CustomTheme customTheme = AppTheme.customTheme;
 
-
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
@@ -75,9 +73,9 @@ class LoginView extends StatelessWidget {
                       ? MdiIcons.eyeOutline
                       : MdiIcons.eyeOffOutline),
                   onPressed: () {
-                    setState(() {
-                      _passwordVisible = !_passwordVisible;
-                    });
+                    // setState(() {
+                    //   _passwordVisible = !_passwordVisible;
+                    // });
                   },
                 ),
 
@@ -136,9 +134,5 @@ class LoginView extends StatelessWidget {
     ),
     );
   }
-
-  void setState(Null Function() param0) {}
-
-
 }
 

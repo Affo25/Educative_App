@@ -1,7 +1,7 @@
 class ResponseData {
-  String status;
-  String message;
-  dynamic data;
+  String Status;
+  String Message;
+  dynamic Data;
 
-  ResponseData(this.status, this.message, this.data);
+  ResponseData(this.Status, this.Message, this.Data);
 }
