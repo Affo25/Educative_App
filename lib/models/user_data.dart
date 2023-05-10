@@ -4,9 +4,9 @@ class UserData {
   String Email;
   String Password;
   String Gender;
-  String Age;
+  int    Age;
   String PhoneNo;
-  String CreatedOn;
+  String? CreatedOn;
 
   UserData(
     this.UserID,

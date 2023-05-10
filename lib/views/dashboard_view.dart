@@ -1,11 +1,8 @@
-
-
 import 'package:educative_app/app_theme.dart';
 import 'package:educative_app/viewmodels/dashboard_viewmodel.dart';
-import 'package:educative_app/views/Nvbar.dart';
-import 'package:educative_app/widgets/material/navigation/navigation_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutx/flutx.dart';
+import 'package:educative_app/views/full_app.dart';
 import 'package:stacked/stacked.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -17,7 +14,7 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<DashboardViewModel>.reactive(
       viewModelBuilder: () => DashboardViewModel(),
-      onViewModelReady: (model)=> model.Init(),
+      onViewModelReady: (model) => model.Init(),
       builder: (context, model, child) =>
           WillPopScope(
               onWillPop: () {
@@ -26,540 +23,115 @@ class DashboardScreen extends StatelessWidget {
                 );
               },
               child: Scaffold(
-                  drawer: NavigationDrawerWidget(),
                   appBar: AppBar(
-                    elevation: 10,
-                    title: FxText.bodyLarge("Tasks",
-                        color: themeData.colorScheme.onBackground, fontWeight: 600),
+                    elevation: 0,
+                    title: FxText.bodyLarge("Choose Test Type",
+                        color: themeData.colorScheme.onBackground,
+                        fontWeight: 600),
                     automaticallyImplyLeading: false,
                     centerTitle: true,
                   ),
-                  resizeToAvoidBottomInset: false,
                   body: ListView(
-                    padding: FxSpacing.top(FxSpacing.safeAreaTop(context) + 20),
+                    padding: FxSpacing.zero,
                     children: <Widget>[
-                      Container(
-                        margin: FxSpacing.horizontal(24),
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: FxContainer(
-                                borderRadiusAll: 4,
-                                padding: FxSpacing.all(6),
-                                child: Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Container(
-                                        margin: EdgeInsets.only(left: 16),
-                                        child: TextField(
-                                          style: FxTextStyle.bodyMedium(
-                                              letterSpacing: 0,
-                                              color: themeData.colorScheme.onBackground,
-                                              fontWeight: 500),
-                                          decoration: InputDecoration(
-                                            fillColor: customTheme.card,
-                                            hintText: "Search courses skills and videos",
-                                            hintStyle: FxTextStyle.bodySmall(
-                                                letterSpacing: 0,
-                                                color: themeData.colorScheme.onBackground,
-                                                fontWeight: 500),
-                                            border: OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(8),
-                                                ),
-                                                borderSide: BorderSide.none),
-                                            enabledBorder: OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(8),
-                                                ),
-                                                borderSide: BorderSide.none),
-                                            focusedBorder: OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(8),
-                                                ),
-                                                borderSide: BorderSide.none),
-                                            isDense: true,
-                                            contentPadding: EdgeInsets.all(0),
-                                          ),
-                                          textInputAction: TextInputAction.search,
-                                          textCapitalization:
-                                          TextCapitalization.sentences,
-                                        ),
-                                      ),
-                                    ),
-                                    FxContainer.none(
-                                      paddingAll: 6,
-                                      color: themeData.colorScheme.primary,
-                                      borderRadiusAll: 4,
-                                      child: Icon(
-                                        MdiIcons.magnify,
-                                        color: themeData.colorScheme.onPrimary,
-                                        size: 16,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            FxContainer.bordered(
-                              onTap: () {
-                                showModalBottomSheet(
-                                    context: context,
-                                    builder: (BuildContext buildContext) {
-                                      return FilterWidget();
-                                    });
-                              },
-                              margin: EdgeInsets.only(left: 16),
-                              borderRadiusAll: 4,
-                              color: Colors.transparent,
-                              padding: EdgeInsets.all(8),
-                              child: Icon(
-                                MdiIcons.tune,
-                                color: themeData.colorScheme.primary,
-                                size: 20,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: FxSpacing.fromLTRB(20, 20, 0, 0),
-                        child: FxText.titleMedium("Category",
-                            color: themeData.colorScheme.onBackground, fontWeight: 700),
-                      ),
-                      Container(
-                        margin: FxSpacing.fromLTRB(20, 20, 24, 0),
-                        child: GridView.count(
-                          physics: ClampingScrollPhysics(),
-                          padding: FxSpacing.zero,
-                          crossAxisCount: 2,
-                          shrinkWrap: true,
-                          childAspectRatio: 2,
-                          crossAxisSpacing: 20,
-                          mainAxisSpacing: 20,
-                          children: <Widget>[
-                            singleCategory(
-                                title: "UI",
-                                image: 'assets/images/afaq.jpg',
-                                courses: 25),
-                            singleCategory(
-                                title: "Business",
-                                image: 'assets/images/back.jpg',
-                                courses: 80),
-                            singleCategory(
-                                title: "Lifestyle",
-                                image: 'assets/images/nrt.png',
-                                courses: 120),
-                            singleCategory(
-                                title: "Marketing",
-                                image: 'assets/images/nrt.png',
-                                courses: 50),
-                            singleCategory(
-                                title: "UX",
-                                image: 'assets/images/afaq.jpg',
-                                courses: 145),
-                            singleCategory(
-                                title: "Social",
-                                image: 'assets/images/avatar_3.jpg',
-                                courses: 15),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: FxSpacing.fromLTRB(20, 20, 20, 0),
-                        child: FxText.titleMedium("Recommended",
-                            color: themeData.colorScheme.onBackground, fontWeight: 700),
-                      ),
-                      GridView.count(
-                        physics: ClampingScrollPhysics(),
-                        crossAxisCount: 2,
-                        shrinkWrap: true,
-                        padding: FxSpacing.all(20),
-                        childAspectRatio:
-                        findAspectRatio(MediaQuery.of(context).size.width),
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          singleResult(
-                              title: "React",
-                              image: 'assets/images/afaq.jpg',
-                              price: 148),
-                          singleResult(
-                              title: "Flutter",
-                              image: "assets/images/avatar_3.jpg",
-                              price: 259),
-                          singleResult(
-                              title: "Web",
-                              image: "assets/images/afaq.jpg",
-                              price: 59),
-                          singleResult(
-                              title: "UI / UX",
-                              image: "assets/images/avatar_3.jpg",
-                              price: 99),
-                          singleResult(
-                              title: "React Native",
-                              image: "assets/images/splashScreen.png",
-                              price: 59),
+                          Container(
+                            margin: FxSpacing.top(8),
+                            child: ListView.builder(
+                                itemCount: model.categoryList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return singleTask(
+                                      image: 'assets/images/afaq.jpg',
+                                      Title: model.categoryList[index].Title);
+                                }),
+                          ),
                         ],
                       )
                     ],
-                  ))
-          ),
+                  ))),
     );
   }
 
-  Widget singleResult(
-      {required String title, required String image, int? price}) {
-    return FxContainer.none(
-      // onTap: () {
-      //   Navigator.push(context,
-      //       MaterialPageRoute(builder: (context) => RegisterView()));
-      // },
+  Widget singleTask({String? Title, String? image, int status = 0}) {
+    IconData iconData;
+    Color iconBG, iconColor, statusColor;
+    switch (status) {
+      case 0:
+        iconBG = customTheme.colorError;
+        iconColor = customTheme.onError;
+        iconData = MdiIcons.plus;
+        statusColor = customTheme.colorError;
+        break;
+      case 1:
+        iconBG = themeData.colorScheme.primary;
+        iconColor = themeData.colorScheme.onPrimary;
+        iconData = MdiIcons.plus;
+        statusColor = themeData.colorScheme.primary;
+        break;
+      case 2:
+        iconBG = customTheme.colorInfo;
+        iconColor = customTheme.onInfo;
+        iconData = MdiIcons.pencilOutline;
+        statusColor = customTheme.colorInfo;
+        break;
+      case 3:
+        iconBG = customTheme.disabledColor;
+        iconColor = customTheme.onDisabled;
+        iconData = MdiIcons.spellcheck;
+        statusColor = customTheme.disabledColor;
+        break;
+      default:
+        iconBG = customTheme.colorError;
+        iconColor = customTheme.onError;
+        iconData = MdiIcons.plus;
+        statusColor = customTheme.colorError;
+        break;
+    }
+
+    return FxContainer.bordered(
+      paddingAll: 16,
+      margin: FxSpacing.fromLTRB(24, 8, 24, 8),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
       borderRadiusAll: 4,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Stack(
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                child: Image(
-                  image: AssetImage(image),
-                ),
-              ),
-              Container(
-                padding: FxSpacing.fromLTRB(12, 6, 12, 6),
-                decoration: BoxDecoration(
-                  color: themeData.colorScheme.primary.withAlpha(240),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      bottomRight: Radius.circular(8)),
-                ),
-                child: FxText.titleSmall("\$ $price",
-                    color: themeData.colorScheme.onPrimary, fontWeight: 500),
-              )
-            ],
-          ),
           Container(
-            margin: FxSpacing.all(8),
-            child: FxText.bodyLarge(
-              title,
-              fontWeight: 600,
-              color: themeData.colorScheme.onBackground,
+            padding: FxSpacing.all(6),
+            decoration: BoxDecoration(color: iconBG, shape: BoxShape.circle),
+            child: Icon(
+              iconData,
+              color: iconColor,
+              size: 20,
             ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget singleCategory(
-      {required String image, required String title, int? courses}) {
-    return InkWell(
-      // onTap: () {
-      //   Navigator.push(context,
-      //       MaterialPageRoute(builder: (context) => LoginView()));
-      // },
-      child: FxContainer.bordered(
-        paddingAll: 0,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                margin: FxSpacing.left(20),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    child: Image(
-                      image: AssetImage(image),
-                      height: 44,
-                      width: 44,
-                    )),
-              ),
-            ),
-            Container(
-              margin: FxSpacing.horizontal(8),
+          ),
+          Expanded(
+            child: Container(
+              margin: FxSpacing.left(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  FxText.bodyMedium(title,
-                      color: themeData.colorScheme.onBackground, fontWeight: 600),
-                  FxText.labelSmall("$courses+ Courses",
+                  FxText.bodyLarge(Title!,
                       color: themeData.colorScheme.onBackground,
-                      letterSpacing: 0,
-                      fontWeight: 500,
-                      muted: true)
+                      fontWeight: 600),
+                  Container(
+                    margin: FxSpacing.all(5),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        child: Image(
+                          image: AssetImage(image!),
+                          alignment: Alignment.topLeft,
+                          height: 44,
+                          width: 44,
+                        )),
+                  ),
                 ],
               ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-}
-
-double findAspectRatio(double width) {
-  //Logic for aspect ratio of grid view
-  return (width / 2 - 24) / ((width / 2 - 24) + 40);
-}
-
-class FilterWidget extends StatefulWidget {
-  const FilterWidget({Key? key}) : super(key: key);
-
-  @override
-  _FilterWidgetState createState() => _FilterWidgetState();
-}
-
-class _FilterWidgetState extends State<FilterWidget> {
-  late CustomTheme customTheme;
-  late ThemeData theme;
-
-  late List<String> _course,
-      _selectedCourse,
-      _duration,
-      _selectedDuration,
-      _type,
-      _selectedType;
-
-  @override
-  void initState() {
-    super.initState();
-    customTheme = AppTheme.customTheme;
-    theme = AppTheme.theme;
-
-    _course = [
-      "Physics",
-      "Biology",
-      "Computer",
-      "Maths",
-      "Chemistry",
-      "Economics",
-      "Sport",
-      "History",
-      "English",
-      "Art"
-    ];
-
-    _duration = ["1-2 Week", "3-4 Week", "2 Month", "3 Month"];
-    _type = ["Beginner", "Intermediate", "Advanced", "Expert"];
-
-    _selectedCourse = ["Maths"];
-    _selectedDuration = ["3-4 Week"];
-    _selectedType = ["Intermediate"];
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> courseWidget = [], durationWidget = [], typeWidget = [];
-    int i = 0;
-    for (i = 0; i < _course.length; i++) {
-      courseWidget.add(InkWell(
-        onTap: () {
-          setState(() {
-            if (_selectedCourse.contains(_course[i])) {
-              _selectedCourse.remove(_course[i]);
-            } else {
-              _selectedCourse.add(_course[i]);
-            }
-          });
-        },
-        child: optionCourseChip(
-            option: _course[i],
-            isSelected: _selectedCourse.contains(_course[i])),
-      ));
-    }
-
-    for (i = 0; i < _duration.length; i++) {
-      durationWidget.add(InkWell(
-        onTap: () {
-          setState(() {
-            if (_selectedDuration.contains(_duration[i])) {
-              _selectedDuration.remove(_duration[i]);
-            } else {
-              _selectedDuration.add(_duration[i]);
-            }
-          });
-        },
-        child: optionDurationChip(
-            isSelected: _selectedDuration.contains(_duration[i]),
-            option: _duration[i]),
-      ));
-    }
-    for (i = 0; i < _type.length; i++) {
-      typeWidget.add(optionTypeChip(
-          isSelected: _selectedType.contains(_type[i]), option: _type[i]));
-    }
-
-    return Container(
-      color: Colors.transparent,
-      child: Container(
-        decoration: BoxDecoration(
-            color: theme.colorScheme.background,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16), topRight: Radius.circular(16))),
-        child: Padding(
-          padding: EdgeInsets.only(top: 16, left: 24, right: 24, bottom: 16),
-          child: ListView(
-            children: <Widget>[
-              Container(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Center(
-                        child: FxText.titleMedium("Filter",
-                            color: theme.colorScheme.onBackground,
-                            fontWeight: 700),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        padding: FxSpacing.all(6),
-                        decoration: BoxDecoration(
-                            color: theme.colorScheme.primary.withAlpha(40),
-                            shape: BoxShape.circle),
-                        child: Icon(
-                          MdiIcons.check,
-                          color: theme.colorScheme.primary,
-                          size: 20,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                margin: FxSpacing.top(24),
-                child: FxText.titleSmall("Course",
-                    color: theme.colorScheme.onBackground, fontWeight: 600),
-              ),
-              Container(
-                margin: FxSpacing.top(12),
-                child: Wrap(
-                  spacing: 8,
-                  runSpacing: 12,
-                  children: courseWidget,
-                ),
-              ),
-              Container(
-                margin: FxSpacing.top(24),
-                child: FxText.titleSmall("Type",
-                    color: theme.colorScheme.onBackground, fontWeight: 600),
-              ),
-              Container(
-                margin: FxSpacing.top(12),
-                child: Wrap(
-                  spacing: 8,
-                  runSpacing: 12,
-                  children: typeWidget,
-                ),
-              ),
-              Container(
-                margin: FxSpacing.top(24),
-                child: FxText.titleSmall("Duration",
-                    color: theme.colorScheme.onBackground, fontWeight: 600),
-              ),
-              Container(
-                margin: FxSpacing.top(12),
-                child: Wrap(
-                  spacing: 8,
-                  runSpacing: 12,
-                  children: durationWidget,
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget optionCourseChip({required String option, required bool isSelected}) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          if (_selectedCourse.contains(option)) {
-            _selectedCourse.remove(option);
-          } else {
-            _selectedCourse.add(option);
-          }
-        });
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            color: isSelected ? theme.colorScheme.primary : Colors.transparent,
-            border: Border.all(
-                color:
-                isSelected ? theme.colorScheme.primary : customTheme.border,
-                width: 1),
-            borderRadius: BorderRadius.all(Radius.circular(16))),
-        padding: FxSpacing.fromLTRB(10, 6, 10, 6),
-        child: FxText.bodyMedium(option,
-            color: isSelected
-                ? theme.colorScheme.onPrimary
-                : theme.colorScheme.onBackground),
-      ),
-    );
-  }
-
-  Widget optionTypeChip({required String option, required bool isSelected}) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          if (_selectedType.contains(option)) {
-            _selectedType.remove(option);
-          } else {
-            _selectedType.add(option);
-          }
-        });
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            color: isSelected ? theme.colorScheme.primary : Colors.transparent,
-            border: Border.all(
-                color:
-                isSelected ? theme.colorScheme.primary : customTheme.border,
-                width: 1),
-            borderRadius: BorderRadius.all(Radius.circular(16))),
-        padding: FxSpacing.fromLTRB(10, 6, 10, 6),
-        child: FxText.bodyMedium(option,
-            color: isSelected
-                ? theme.colorScheme.onPrimary
-                : theme.colorScheme.onBackground),
-      ),
-    );
-  }
-
-  Widget optionDurationChip(
-      {required String option, required bool isSelected}) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          if (_selectedDuration.contains(option)) {
-            _selectedDuration.remove(option);
-          } else {
-            _selectedDuration.add(option);
-          }
-        });
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            color: isSelected ? theme.colorScheme.primary : Colors.transparent,
-            border: Border.all(
-                color:
-                isSelected ? theme.colorScheme.primary : customTheme.border,
-                width: 1),
-            borderRadius: BorderRadius.all(Radius.circular(16))),
-        padding: FxSpacing.fromLTRB(10, 6, 10, 6),
-        child: FxText.bodyMedium(option,
-            color: isSelected
-                ? theme.colorScheme.onPrimary
-                : theme.colorScheme.onBackground),
+        ],
       ),
     );
   }

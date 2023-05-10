@@ -4,17 +4,15 @@ import 'package:educative_app/views/profile.dart';
 import 'package:flutx/flutx.dart';
 import 'package:flutter/material.dart';
 import '../views/dashboard_view.dart';
-import 'Nvbar.dart';
 import 'subcategory.dart';
 
 
-class FullApp extends StatelessWidget {
+class FullAppScreen extends StatelessWidget {
 
 
 
   final ThemeData themeData = AppTheme.theme;
   final CustomTheme customTheme = AppTheme.customTheme;
-
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +38,7 @@ class FullApp extends StatelessWidget {
             iconData: Icons.house_outlined,
           ),
           FxBottomNavigationBarItem(
-            page: CourseTasksScreen(),
+            page: DashboardScreen(),
             activeIconData: Icons.date_range,
             iconData: Icons.date_range_outlined,
           ),

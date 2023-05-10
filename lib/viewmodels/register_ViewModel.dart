@@ -1,5 +1,6 @@
 import 'package:educative_app/app/app.locator.dart';
 import 'package:educative_app/app/app.router.dart';
+import 'package:educative_app/extensions/extensions.dart';
 import 'package:educative_app/models/response_data.dart';
 import 'package:educative_app/services/database_service.dart';
 import 'package:educative_app/utils/logger_util.dart';
@@ -16,17 +17,12 @@ class RegisterViewModel extends BaseViewModel {
 
   void init() async {}
 
-  void createNewUser(String name,String email,String gender, String password, String phone) async {
+  void createNewUser(String name,String email,String gender, String password, String phone,String Age) async {
     if(name=="" || email == "" || password == "")
       {
         return;
       }
-    UserData d = UserData(0,name,email,password,gender,"0",phone,"");
-    // d.Name = name;
-    // d.Email = email;
-    // d.Gender = gender;
-    // d.Password = password;
-    // d.PhoneNo = phone;
+    UserData d = UserData(0,name,email,password,gender,Age.toInt(),phone,"");
     Map<String,dynamic> uData = d.toJson();
     await _apiService.signupUser(uData);
   }

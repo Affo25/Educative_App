@@ -9,7 +9,7 @@ class ApiService {
   Future<ResponseData> loginAdmin(String email, String password) async {
     try {
       Response response = await dio.post(
-        '$baseUrl/user-login',
+        '$baseUrl/login-user',
         data: {
           'Email': email,
           'Password': password,
@@ -19,14 +19,14 @@ class ApiService {
       var status = response.data['Status'];
 
       if (status == "ERROR") {
-        logger('loginUser: ERROR');
+        logger('loginAdmin: ERROR');
         return ResponseData('ERROR', response.data['Message'], []);
       }
 
-      logger('loginUser: OK');
+      logger('loginAdmin: OK');
       return ResponseData('OK', 'Success', response.data['Data']);
     } on DioError catch (e) {
-      logger('loginUser: ERROR - ' + e.toString());
+      logger('loginAdmin: ERROR - ' + e.toString());
       return ResponseData('ERROR', 'Failed', e.message);
     }
   }
@@ -34,7 +34,7 @@ class ApiService {
   Future<ResponseData> signupUser(Map<String, dynamic> userData) async {
     try {
       Response response = await dio.post(
-        '$baseUrl/add-user', // we have to create new api
+        '$baseUrl/add-new-user', // we have to create new api
         data: userData,
       );
 
@@ -62,14 +62,14 @@ class ApiService {
       var status = response.data['Status'];
 
       if (status == "ERROR") {
-        logger('signupUser: ERROR');
+        logger('getCategories: ERROR');
         return ResponseData('ERROR', response.data['Message'], []);
       }
 
-      logger('signupUser: OK');
+      logger('getCategories: OK');
       return ResponseData('OK', 'Success', response.data['Data']);
     } on DioError catch (e) {
-      logger('signupUser: ERROR - $e');
+      logger('getCategories: ERROR - $e');
       return ResponseData('ERROR', 'Failed', e.message);
     }
   }

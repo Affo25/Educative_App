@@ -13,6 +13,7 @@ import 'package:stacked/stacked.dart';
 import '../views/login_view.dart';
 import '../views/register_view.dart';
 import '../views/dashboard_view.dart';
+import '../views/full_app.dart';
 // import '../views/data_view.dart';
 // import '../views/last_view.dart';
 // import '/views/login_view.dart';
@@ -26,7 +27,7 @@ class Routes {
    static const String registerView = '/Register-view';
    static const String loginView = '/login-view';
    static const String dashboardView = '/dashboard-view';
-  // static const String syncView = '/sync-view';
+   // static const String syncView = '/sync-view';
   // static const String settingsView = '/settings-view';
   // static const String dataView = '/data-view';
   // static const String wheelView = '/wheel-view';

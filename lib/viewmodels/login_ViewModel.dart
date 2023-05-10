@@ -19,6 +19,10 @@ class LoginViewModel extends BaseViewModel {
   bool get ShowPass => _showPass;
 
   Future<void> login(username, password) async {
+    if(username==""|| password==""){
+       _snackbarService.showSnackbar(message: "Plaese enter username or password");
+       return;
+    }
     setBusy(true);
     ResponseData response = await _apiService.loginAdmin(username, password);
 
@@ -49,7 +53,7 @@ class LoginViewModel extends BaseViewModel {
     }
 
     setBusy(false);
-    _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
+    _navigationService.navigateTo(Routes.dashboardView);
   }
 
   void showMessage(String message) {

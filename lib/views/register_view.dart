@@ -8,6 +8,7 @@ import 'package:educative_app/widgets/text_field/text_field.dart';
 
 import '../widgets/button/button.dart';
 import '../widgets/text/text.dart';
+import 'Quiz.dart';
 
 
 class RegisterView extends StatelessWidget {
@@ -145,10 +146,10 @@ class RegisterView extends StatelessWidget {
                   child: FxButton.text(
                       padding: FxSpacing.zero,
                       onPressed: () {
-                        // Navigator.of(context, rootNavigator: true).push(
-                        //   MaterialPageRoute(
-                        //       builder: (context) => RegistrationView()),
-                        // );
+                         Navigator.of(context, rootNavigator: true).push(
+                           MaterialPageRoute(
+                               builder: (context) => QuizQuestionType1Screen()),
+                         );
                       },
                       splashColor: customTheme.medicarePrimary.withAlpha(40),
                       child: FxText.bodySmall("Forgot Password?",
@@ -159,10 +160,10 @@ class RegisterView extends StatelessWidget {
                     borderRadiusAll: 8,
                     elevation: 0,
                     onPressed: () {
-                        Navigator.of(context, rootNavigator: true).push(
-                         MaterialPageRoute(builder: (context) => RegisterView()),
+                      Navigator.of(context, rootNavigator: true).push(
+                         MaterialPageRoute(builder: (context) => LoginView()),
                         );
-                      model.createNewUser(nameCtrl.text, emailCtrl.text,genderCtrl.text,passwordCtrl.text,phoneNoCtrl.text);
+                      model.createNewUser(nameCtrl.text, emailCtrl.text,genderCtrl.text,passwordCtrl.text,phoneNoCtrl.text, ageCtrl.text);
                     },
                     backgroundColor: customTheme.medicarePrimary,
                     child: FxText.bodyLarge(
@@ -172,7 +173,6 @@ class RegisterView extends StatelessWidget {
                 FxSpacing.height(16),
                 FxButton.text(
                     onPressed: () {
-
                        Navigator.of(context, rootNavigator: true).push(
                          MaterialPageRoute(
                              builder: (context) => LoginView()),

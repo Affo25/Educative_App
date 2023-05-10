@@ -89,7 +89,7 @@ class LoginView extends StatelessWidget {
                       Navigator.of(context, rootNavigator: true).push(
                         MaterialPageRoute(
                             builder: (context) =>
-                                FullApp()),
+                                FullAppScreen()),
                       );
                     },
                     splashColor: customTheme.medicarePrimary.withAlpha(40),
@@ -104,6 +104,7 @@ class LoginView extends StatelessWidget {
                   Navigator.of(context, rootNavigator: true).push(
                     MaterialPageRoute(builder: (context) => LoginView()),
                   );
+                  model.login( emailCtrl.text,passwordCtrl.text);
                 },
                 backgroundColor: customTheme.medicarePrimary,
                 child: FxText.labelMedium(
