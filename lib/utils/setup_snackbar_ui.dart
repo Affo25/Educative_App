@@ -6,11 +6,10 @@ import 'package:stacked_services/stacked_services.dart';
 
 void setupSnackbarUi() {
   final service = locator<SnackbarService>();
-
   service.registerSnackbarConfig(SnackbarConfig(
-    maxWidth: 100.0,
+    maxWidth: 500.0,
     margin: EdgeInsets.all(20),
-    backgroundColor: whiteColor,
-    textColor: blackColor,
+    backgroundColor: blackColor,
+    textColor: whiteColor,
   ));
 }

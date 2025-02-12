@@ -1,17 +1,13 @@
 
-import 'package:educative_app/views/dashboard_view.dart';
-import 'package:educative_app/widgets/button/button.dart';
 import 'package:educative_app/widgets/text/text.dart';
-import 'package:educative_app/viewmodels/splashViewModel.dart';
+import 'package:educative_app/viewmodels/splash_vm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:educative_app/theme/custom_theme.dart';
-import 'package:educative_app/views/login_view.dart';
 import '../theme/text_style.dart';
 import '../utils/spacing.dart';
 import 'package:educative_app/app_theme.dart';
-import 'package:educative_app/views/register_view.dart';
 
 
 
@@ -62,7 +58,7 @@ class _SplashViewState extends State<SplashView> {
             children: [
               FxText.displaySmall(
                 "Welcome to Educative App",
-                color: Colors.blue,
+                color: customTheme.medicarePrimary,
               ),
               const Expanded(
                 child: Center(
@@ -75,41 +71,7 @@ class _SplashViewState extends State<SplashView> {
               ),
               Row(
                 children: [
-                  Expanded(
-                      child: FxButton.text(
-                        splashColor: customTheme.medicarePrimary.withAlpha(40),
-                        padding: FxSpacing.y(12),
-                        onPressed: () {
-                          Navigator.of(context, rootNavigator: true).push(
-                            MaterialPageRoute(
-                                builder: (context) => RegisterView()),
-                          );
-                        },
-
-                        child: FxText.labelLarge(
-                          "SIGN UP",
-                          color: customTheme.medicarePrimary,
-                          letterSpacing: 0.5,
-                        ),
-                      )),
-                  Expanded(
-                      child: FxButton(
-                        elevation: 0,
-                        padding: FxSpacing.y(12),
-                        borderRadiusAll: 4,
-                        onPressed: () {
-                          Navigator.of(context, rootNavigator: true).push(
-                            MaterialPageRoute(
-                                builder: (context) => LoginView()),
-                          );
-                        },
-                        backgroundColor:  customTheme.medicarePrimary,
-                        child: FxText.labelLarge(
-                          "LOG IN",
-                          color:  customTheme.medicareOnPrimary,
-                          letterSpacing: 0.5,
-                        ),
-                      )),
+                  Text("Powered By:Code5Technology",style: TextStyle(fontSize: 14,color:customTheme.medicarePrimary,),)
                 ],
               )
             ],

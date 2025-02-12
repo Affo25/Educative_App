@@ -42,6 +42,12 @@ dependencies:
   flutter_svg: ^0.23.0+1
   material_design_icons_flutter: ^6.0.7096
   flutx: ^0.1.2
+  dio: ^4.0.0
+  intl: ^0.17.0
+  json_store: ^2.0.1
+  flutter_screenutil: ^5.0.0+2
+  google_fonts: ^2.3.2
+  shared_preferences: ^2.0.5
 
 
 dev_dependencies:
@@ -57,12 +63,6 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   stacked: ^3.2.0
   stacked_services: ^1.0.0
-  dio: ^4.0.0
-  intl: ^0.17.0
-  json_store: ^2.0.0-nullsafety.0
-  flutter_screenutil: ^5.0.0+2
-  google_fonts: ^2.3.3
-  shared_preferences: ^2.0.5
 
 
 

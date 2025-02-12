@@ -1,14 +1,17 @@
 import 'package:educative_app/app_theme.dart';
 import 'package:educative_app/views/login_view.dart';
+import 'package:educative_app/views/splash.dart';
  import 'package:stacked/stacked.dart';
 import 'package:flutter/material.dart';
+import '../flutx/lib/icons/two_tone/two_tone_icon.dart';
 import '../utils/spacing.dart';
-import '../viewmodels/register_ViewModel.dart';
+import '../viewmodels/register_vm.dart';
 import 'package:educative_app/widgets/text_field/text_field.dart';
 
 import '../widgets/button/button.dart';
 import '../widgets/text/text.dart';
 import 'Quiz.dart';
+import 'popup_view.dart';
 
 
 class RegisterView extends StatelessWidget {
@@ -23,176 +26,177 @@ class RegisterView extends StatelessWidget {
   final ThemeData themeData = AppTheme.theme;
   final CustomTheme customTheme = AppTheme.customTheme;
   bool showHiddenpassword = true;
+  List<String> gender = ["Male", "Female"];
 
-
-
-
-   @override
+  @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RegisterViewModel>.reactive(
-      viewModelBuilder: () => RegisterViewModel(),
-      builder: (context, model, child) => WillPopScope(
-        onWillPop: () {
-          return Future(
-            () => false,
-          );
-        },
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Padding(
-            padding: FxSpacing.horizontal(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FxTextField(
-
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  autoFocusedBorder: true,
-                  textFieldStyle: FxTextFieldStyle.outlined,
-                  textFieldType: FxTextFieldType.name,
-                  filled: true,
-                  fillColor: customTheme.medicarePrimary.withAlpha(40),
-                  enabledBorderColor: customTheme.medicarePrimary,
-                  focusedBorderColor: customTheme.medicarePrimary,
-                  prefixIconColor: customTheme.medicarePrimary,
-                  labelTextColor: customTheme.medicarePrimary,
-                  cursorColor: customTheme.medicarePrimary,
-                  controller: nameCtrl,
-                ),
-                FxSpacing.height(20),
-                FxTextField(
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  autoFocusedBorder: true,
-                  textFieldStyle: FxTextFieldStyle.outlined,
-                  textFieldType: FxTextFieldType.email,
-                  filled: true,
-                  fillColor: customTheme.medicarePrimary.withAlpha(40),
-                  enabledBorderColor: customTheme.medicarePrimary,
-                  focusedBorderColor: customTheme.medicarePrimary,
-                  prefixIconColor: customTheme.medicarePrimary,
-                  labelTextColor: customTheme.medicarePrimary,
-                  cursorColor: customTheme.medicarePrimary,
-                    controller: emailCtrl,
-                ),
-                FxSpacing.height(20),
-                FxTextField(
-                  obscureText: showHiddenpassword,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  autoFocusedBorder: true,
-                  textFieldStyle: FxTextFieldStyle.outlined,
-                  textFieldType: FxTextFieldType.password,
-                  filled: true,
-                  fillColor: customTheme.medicarePrimary.withAlpha(40),
-                  enabledBorderColor: customTheme.medicarePrimary,
-                  focusedBorderColor: customTheme.medicarePrimary,
-                  prefixIconColor: customTheme.medicarePrimary,
-                  labelTextColor: customTheme.medicarePrimary,
-                  cursorColor: customTheme.medicarePrimary,
-                   suffixIcon: InkWell(
-                    //onTap: buildPasswordField,
-                       child: Icon(Icons.visibility)),
-
-
-                  controller: passwordCtrl,
-                ),
-                FxSpacing.height(20),
-                FxTextField(
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  autoFocusedBorder: true,
-                  textFieldStyle: FxTextFieldStyle.outlined,
-                  textFieldType: FxTextFieldType.gender,
-                  filled: true,
-                  fillColor: customTheme.medicarePrimary.withAlpha(40),
-                  enabledBorderColor: customTheme.medicarePrimary,
-                  focusedBorderColor: customTheme.medicarePrimary,
-                  prefixIconColor: customTheme.medicarePrimary,
-                  labelTextColor: customTheme.medicarePrimary,
-                  cursorColor: customTheme.medicarePrimary,
-                  controller: genderCtrl,
-                ),
-                FxSpacing.height(20),
-                FxTextField(
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  autoFocusedBorder: true,
-                  textFieldStyle: FxTextFieldStyle.outlined,
-                  textFieldType: FxTextFieldType.age,
-                  filled: true,
-                  fillColor: customTheme.medicarePrimary.withAlpha(40),
-                  enabledBorderColor: customTheme.medicarePrimary,
-                  focusedBorderColor: customTheme.medicarePrimary,
-                  prefixIconColor: customTheme.medicarePrimary,
-                  labelTextColor: customTheme.medicarePrimary,
-                  cursorColor: customTheme.medicarePrimary,
-                  controller: ageCtrl,
-                ),
-                FxSpacing.height(20),
-                FxTextField(
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  autoFocusedBorder: true,
-                  textFieldStyle: FxTextFieldStyle.outlined,
-                  textFieldType: FxTextFieldType.mobileNumber,
-                  filled: true,
-                  fillColor: customTheme.medicarePrimary.withAlpha(40),
-                  enabledBorderColor: customTheme.medicarePrimary,
-                  focusedBorderColor: customTheme.medicarePrimary,
-                  prefixIconColor: customTheme.medicarePrimary,
-                  labelTextColor: customTheme.medicarePrimary,
-                  cursorColor: customTheme.medicarePrimary,
-                  controller: phoneNoCtrl,
-                ),
-                FxSpacing.height(16),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: FxButton.text(
-                      padding: FxSpacing.zero,
-                      onPressed: () {
-                         Navigator.of(context, rootNavigator: true).push(
-                           MaterialPageRoute(
-                               builder: (context) => QuizQuestionType1Screen()),
-                         );
-                      },
-                      splashColor: customTheme.medicarePrimary.withAlpha(40),
-                      child: FxText.bodySmall("Forgot Password?",
-                          color: customTheme.medicarePrimary)),
-                ),
-                FxSpacing.height(16),
-                FxButton.block(
-                    borderRadiusAll: 8,
-                    elevation: 0,
-                    onPressed: () {
-                      Navigator.of(context, rootNavigator: true).push(
-                         MaterialPageRoute(builder: (context) => LoginView()),
-                        );
-                      model.createNewUser(nameCtrl.text, emailCtrl.text,genderCtrl.text,passwordCtrl.text,phoneNoCtrl.text, ageCtrl.text);
-                    },
-                    backgroundColor: customTheme.medicarePrimary,
-                    child: FxText.bodyLarge(
-                      "Create an Account",
-                      color: customTheme.medicareOnPrimary,
-                    )),
-                FxSpacing.height(16),
-                FxButton.text(
-                    onPressed: () {
-                       Navigator.of(context, rootNavigator: true).push(
-                         MaterialPageRoute(
-                             builder: (context) => LoginView()),
-                       );
-                    },
-                    splashColor: customTheme.medicarePrimary.withAlpha(40),
-                    child: FxText.bodySmall("I have already an account",
-                        decoration: TextDecoration.underline,
-                        color: customTheme.medicarePrimary)),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+        viewModelBuilder: () => RegisterViewModel(),
+        builder: (context, model, child) =>
+            WillPopScope(
+                onWillPop: () async {
+                  return  false;
+                },
+                child: Scaffold(
+                  body: ListView(
+                    padding: FxSpacing.fromLTRB(24, 100, 24, 0),
+                    children: [
+                      FxTwoToneIcon(
+                        FxTwoToneMdiIcons.menu_book,
+                        color: customTheme.medicarePrimary,
+                        size: 64,
+                      ),
+                      FxSpacing.height(16),
+                      FxText.displaySmall(
+                        "Create an Account",
+                        color: customTheme.medicarePrimary,
+                        fontWeight: 800,
+                        textAlign: TextAlign.center,
+                      ),
+                      FxSpacing.height(32),
+                      FxTextField(
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        autoFocusedBorder: true,
+                        textFieldStyle: FxTextFieldStyle.outlined,
+                        textFieldType: FxTextFieldType.name,
+                        filled: true,
+                        fillColor: customTheme.medicarePrimary.withAlpha(40),
+                        enabledBorderColor: customTheme.medicarePrimary,
+                        focusedBorderColor: customTheme.medicarePrimary,
+                        prefixIconColor: customTheme.medicarePrimary,
+                        labelTextColor: customTheme.medicarePrimary,
+                        cursorColor: customTheme.medicarePrimary,
+                        controller: nameCtrl,
+                      ),
+                      FxSpacing.height(14),
+                      FxTextField(
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        autoFocusedBorder: true,
+                        textFieldStyle: FxTextFieldStyle.outlined,
+                        textFieldType: FxTextFieldType.email,
+                        filled: true,
+                        fillColor: customTheme.medicarePrimary.withAlpha(40),
+                        enabledBorderColor: customTheme.medicarePrimary,
+                        focusedBorderColor: customTheme.medicarePrimary,
+                        prefixIconColor: customTheme.medicarePrimary,
+                        labelTextColor: customTheme.medicarePrimary,
+                        cursorColor: customTheme.medicarePrimary,
+                        controller: emailCtrl,
+                      ),
+                      FxSpacing.height(14),
+                      FxTextField(
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        autoFocusedBorder: true,
+                        textFieldStyle: FxTextFieldStyle.outlined,
+                        textFieldType: FxTextFieldType.password,
+                        filled: true,
+                        fillColor: customTheme.medicarePrimary.withAlpha(40),
+                        enabledBorderColor: customTheme.medicarePrimary,
+                        focusedBorderColor: customTheme.medicarePrimary,
+                        prefixIconColor: customTheme.medicarePrimary,
+                        labelTextColor: customTheme.medicarePrimary,
+                        cursorColor: customTheme.medicarePrimary,
+                        controller: passwordCtrl,
+                      ),
+                      FxSpacing.height(14),
+                      FxTextField(
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        autoFocusedBorder: true,
+                        textFieldStyle: FxTextFieldStyle.outlined,
+                        textFieldType: FxTextFieldType.gender,
+                        filled: true,
+                        fillColor: customTheme.medicarePrimary.withAlpha(40),
+                        enabledBorderColor: customTheme.medicarePrimary,
+                        focusedBorderColor: customTheme.medicarePrimary,
+                        prefixIconColor: customTheme.medicarePrimary,
+                        labelTextColor: customTheme.medicarePrimary,
+                        cursorColor: customTheme.medicarePrimary,
+                        controller: genderCtrl,
+                      ),
+                      FxSpacing.height(14),
+                      FxTextField(
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        autoFocusedBorder: true,
+                        textFieldStyle: FxTextFieldStyle.outlined,
+                        textFieldType: FxTextFieldType.age,
+                        filled: true,
+                        fillColor: customTheme.medicarePrimary.withAlpha(40),
+                        enabledBorderColor: customTheme.medicarePrimary,
+                        focusedBorderColor: customTheme.medicarePrimary,
+                        prefixIconColor: customTheme.medicarePrimary,
+                        labelTextColor: customTheme.medicarePrimary,
+                        cursorColor: customTheme.medicarePrimary,
+                        controller: ageCtrl,
+                      ),
+                      FxSpacing.height(14),
+                      FxTextField(
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        autoFocusedBorder: true,
+                        textFieldStyle: FxTextFieldStyle.outlined,
+                        textFieldType: FxTextFieldType.mobileNumber,
+                        filled: true,
+                        fillColor: customTheme.medicarePrimary.withAlpha(40),
+                        enabledBorderColor: customTheme.medicarePrimary,
+                        focusedBorderColor: customTheme.medicarePrimary,
+                        prefixIconColor: customTheme.medicarePrimary,
+                        labelTextColor: customTheme.medicarePrimary,
+                        cursorColor: customTheme.medicarePrimary,
+                        controller: phoneNoCtrl,
+                      ),
+                      FxSpacing.height(16),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: FxButton.text(
+                            padding: FxSpacing.zero,
+                            onPressed: () {
+                              Navigator.of(context, rootNavigator: true).push(
+                                MaterialPageRoute(
+                                    builder: (context) => SelectDialog()),
+                              );
+                            },
+                            splashColor: customTheme.medicarePrimary.withAlpha(
+                                40),
+                            child: FxText.bodySmall("Forgot Password?",
+                                color: customTheme.medicarePrimary)),
+                      ),
+                      FxSpacing.height(16),
+                      FxButton.block(
+                          borderRadiusAll: 8,
+                          onPressed: () {
+                            Navigator.of(context, rootNavigator: true).push(
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterView()),
+                            );
+                            model.createNewUser(
+                                nameCtrl.text, emailCtrl.text, genderCtrl.text,
+                                passwordCtrl.text, phoneNoCtrl.text,
+                                ageCtrl.text);
+                          },
+                          backgroundColor: customTheme.medicarePrimary,
+                          child: FxText.labelLarge(
+                            "Create an Account",
+                            color: customTheme.medicareOnPrimary,
+                          )),
+                      FxSpacing.height(16),
+                      FxButton.text(
+                          onPressed: () {
+                            Navigator.of(context, rootNavigator: true).push(
+                              MaterialPageRoute(
+                                  builder: (context) => LoginView()),
+                            );
+                          },
+                          splashColor: customTheme.medicarePrimary.withAlpha(
+                              40),
+                          child: FxText.labelMedium("I have already an account",
+                              decoration: TextDecoration.underline,
+                              color: customTheme.medicarePrimary)),
+                      FxSpacing.height(16),
+                    ],
+                  ),
+                )));
   }
 
 
+  }
 
 
-}
-
- 

@@ -5,41 +5,33 @@
 * */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutx/flutx.dart';
+import 'package:stacked_services/stacked_services.dart';
  import 'package:educative_app/app_theme.dart';
+import 'package:educative_app/app/app.locator.dart';
+import 'package:educative_app/app/app.router.dart';
+ import 'package:educative_app/services/database_service.dart';
+import 'package:stacked/stacked.dart';
+import '../viewmodels/profile_vm.dart';
 
-class nav_BarWidget extends StatefulWidget {
-  @override
-  _nav_BarWidgetState createState() => _nav_BarWidgetState();
-}
 
-class _nav_BarWidgetState extends State<nav_BarWidget> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
-  GlobalKey<ScaffoldMessengerState>();
-
-  int _selectedPage = 0;
-
-  late ThemeData theme;
-  late CustomTheme customTheme;
-
-  @override
-  void initState() {
-    super.initState();
-    theme = AppTheme.theme;
-    customTheme = AppTheme.customTheme;
-  }
+class nav_BarWidget extends StatelessWidget {
+  final ThemeData themeData = AppTheme.theme;
+  final CustomTheme customTheme = AppTheme.customTheme;
+  final _databaseService = locator<DatabaseService>();
+  final _navigationService = locator<NavigationService>();
 
   @override
   Widget build(BuildContext context) {
-    theme = Theme.of(context);
-    return Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          title: FxText.titleMedium("Drawer", fontWeight: 600),
-        ),
-        drawer: Drawer(
+    return ViewModelBuilder<ProfileViewModel>.reactive(
+      viewModelBuilder: () => ProfileViewModel(),
+      onViewModelReady: (model) => model.Init(),
+      builder: (context, model, child) =>
+          WillPopScope(
+            onWillPop: () async {
+              return true;
+            },
+    child: Drawer(
             child: Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -50,7 +42,8 @@ class _nav_BarWidgetState extends State<nav_BarWidget> {
                     child: DrawerHeader(
                       padding: FxSpacing.all(0),
                       margin: FxSpacing.all(0),
-                      decoration: BoxDecoration(color: theme.primaryColor),
+                      decoration: BoxDecoration(
+                          color: AppTheme.theme.primaryColor),
                       child: Container(
                         child: Padding(
                           padding: FxSpacing.fromLTRB(16, 0, 16, 8),
@@ -60,7 +53,8 @@ class _nav_BarWidgetState extends State<nav_BarWidget> {
                               Expanded(
                                 flex: 1,
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceBetween,
                                   children: <Widget>[
                                     Row(
                                       children: <Widget>[
@@ -71,35 +65,8 @@ class _nav_BarWidgetState extends State<nav_BarWidget> {
                                             shape: BoxShape.circle,
                                             image: DecorationImage(
                                                 image:
-                                                AssetImage('assets/images/afaq.jpg'),
-                                                fit: BoxFit.fill),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Container(
-                                          width: 40,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                                image:
-                                                AssetImage ('assets/images/afaq.jpg'),
-                                                fit: BoxFit.fill),
-                                          ),
-                                        ),
-                                        FxSpacing.width(20),
-                                        Container(
-                                          width: 40,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                                image:
-                                                AssetImage('assets/images/afaq.jpg'),
+                                                AssetImage(
+                                                    'assets/images/images.png'),
                                                 fit: BoxFit.fill),
                                           ),
                                         ),
@@ -112,11 +79,13 @@ class _nav_BarWidgetState extends State<nav_BarWidget> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  FxText.titleLarge("Taslima Beattie",
+                                  FxText.titleLarge(model.currentUser?.Name ?? "",
                                       fontWeight: 600,
-                                      color: theme.colorScheme.onPrimary),
-                                  FxText.bodyMedium("tas@gmail.com",
-                                      color: theme.colorScheme.onPrimary,
+                                      color: AppTheme.theme.colorScheme
+                                          .onPrimary),
+                                  FxText.bodyMedium(model.currentUser?.Email ?? "",
+                                      color: AppTheme.theme.colorScheme
+                                          .onPrimary,
                                       fontWeight: 400)
                                 ],
                               ),
@@ -131,127 +100,111 @@ class _nav_BarWidgetState extends State<nav_BarWidget> {
                   Expanded(
                     flex: 6,
                     child: Container(
-                      color: theme.colorScheme.background,
+                      color: Colors.white,
                       child: Padding(
                         padding: FxSpacing.bottom(8),
                         child: ListView(
-                          padding: FxSpacing.all(0),
+                          padding: FxSpacing.all(10),
                           children: <Widget>[
-                            singleDrawerItem(Icons.inbox, "All Inboxes", 0),
+                            GestureDetector(
+                              child: singleDrawerItem(
+                                  Icons.question_answer_sharp, "Add new Question", 13),
+                              onTap: ()=>{
+                                _navigationService.navigateTo(Routes.quesview)
+                              },
+                            ),
                             Divider(
                               height: 1,
-                              color: theme.dividerColor,
+                              color: AppTheme.theme.dividerColor,
                               thickness: 1,
                             ),
-                            singleDrawerItem(Icons.email_outlined, "Primary", 1),
-                            singleDrawerItem(Icons.groups_outlined, "Social", 2),
-                            singleDrawerItem(Icons.tag_outlined, "Promotion", 3),
-                            Container(
-                              margin: FxSpacing.only(
-                                  top: 12, left: 16, right: 16, bottom: 12),
-                              child: Text("ALL LABELS",
-                                  style: theme.textTheme.bodySmall!.merge(TextStyle(
-                                      color: theme.colorScheme.onBackground
-                                          .withAlpha(240),
-                                      fontWeight: FontWeight.w700,
-                                      letterSpacing: 0.35,
-                                      wordSpacing: 1.2))),
+                            GestureDetector(
+                             child: singleDrawerItem(
+                                  Icons.favorite, "Saved Question", 1),
+                              onTap: ()=>{
+                                _navigationService.navigateTo(Routes.quiz_detailview)
+                              },
                             ),
-                            singleDrawerItem(Icons.star_outline, "Starred", 4),
-                            singleDrawerItem(Icons.schedule_outlined, "Snoozed", 5),
-                            singleDrawerItem(Icons.send_outlined, "Sent", 6),
-                            singleDrawerItem(
-                                Icons.insert_drive_file_outlined, "Drafts", 7),
-                            singleDrawerItem(
-                                Icons.mark_email_read_outlined, "All Mail", 8),
-                            singleDrawerItem(
-                                Icons.report_gmailerrorred_outlined, "Spam", 9),
-                            singleDrawerItem(Icons.delete_outline, "Bin", 10),
-                            Container(
-                              margin: FxSpacing.only(
-                                  top: 12, left: 16, right: 16, bottom: 12),
-                              child: Text("OTHER APPS",
-                                  style: theme.textTheme.bodySmall!.merge(TextStyle(
-                                      color: theme.colorScheme.onBackground
-                                          .withAlpha(240),
-                                      fontWeight: FontWeight.w700,
-                                      letterSpacing: 0.35,
-                                      wordSpacing: 1.2))),
+
+                            GestureDetector(
+                              child: singleDrawerItem(
+                                  Icons.feedback_sharp, "FeedBack", 13),
+                              onTap: ()=>{
+                                _navigationService.navigateTo(Routes.feedbackview)
+                              },
                             ),
-                            singleDrawerItem(
-                                Icons.calendar_today_outlined, "Calender", 11),
-                            singleDrawerItem(
-                                Icons.perm_contact_cal_outlined, "Contact", 12),
+                            GestureDetector(
+                              child: singleDrawerItem(
+                                  Icons.history, "Quiz History", 13),
+                              onTap: ()=>{
+                                _navigationService.navigateTo(Routes.resultview)
+                              },
+                            ),
                             Divider(
                               height: 1,
-                              color: theme.dividerColor,
+                              color: Colors.white,
                               thickness: 1,
                             ),
-                            singleDrawerItem(Icons.build_outlined, "Settings", 13),
-                            singleDrawerItem(
-                                Icons.help_outline, "Help and feedback", 14),
-                          ],
+                            GestureDetector(
+                              child: singleDrawerItem(
+                                  Icons.report, "Report Question", 13),
+                              onTap: ()=>{
+                                _navigationService.navigateTo(Routes.reportquestionview)
+                              },
+                            ),
+                            Divider(
+                              height: 1,
+                              color: AppTheme.theme.dividerColor,
+                              thickness: 1,
+                            ),
+                            GestureDetector(
+                              child: singleDrawerItem(
+                                  Icons.logout_outlined, "Logout", 13),
+                              onTap: ()=>{
+                                _databaseService.removeUser(),
+                              _navigationService.navigateTo(Routes.loginView)
+                                //navigator
+                                // message show kese krty hen?
+                                //print("sdfksjdh")
+                              },
+                            ),
+
+                           ],
                         ),
                       ),
                     ),
                   )
                 ],
               ),
-            )),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            FeatherIcons.chevronLeft,
-            color: theme.colorScheme.onPrimary,
-          ),
-        ),
-        body: Container(
-          color: theme.colorScheme.background,
-        ));
+            ))));
   }
 
   Widget singleDrawerItem(IconData iconData, String title, int position) {
+    var _selectedPage;
     return ListTile(
       dense: true,
       contentPadding: FxSpacing.x(16),
       leading: Icon(iconData,
           size: 20,
-          color: _selectedPage == position
-              ? theme.colorScheme.primary
-              : theme.colorScheme.onBackground.withAlpha(240)),
+          color: Colors.black54),
       title: Text(title,
-          style: theme.textTheme.titleSmall!
+          style: AppTheme.theme.textTheme.titleMedium!
               .merge(TextStyle(
-              fontWeight: _selectedPage == position
-                  ? FontWeight.w600
-                  : FontWeight.w500,
-              letterSpacing: 0.2))
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.2,
+          wordSpacing: 1,))
               .merge(TextStyle(
-              color: _selectedPage == position
-                  ? theme.colorScheme.primary
-                  : theme.colorScheme.onBackground.withAlpha(240)))),
-      onTap: () {
-        setState(() {
-          _selectedPage = position;
-        });
-        _scaffoldKey.currentState!.openEndDrawer();
-      },
-    );
+              color:  Colors.black54,
+      fontSize: 16,
+      // onTap: () {
+      //   setState(() {
+      //     _selectedPage = position;
+      //   });
+      //   _scaffoldKey.currentState!.openEndDrawer();
+      // },
+    ))));
   }
 
-  void showSnackBarWithFloating(String message) {
-    scaffoldMessengerKey.currentState!.showSnackBar(
-      SnackBar(
-        content: Text(
-          message,
-          style: theme.textTheme.titleSmall!
-              .merge(TextStyle(color: theme.colorScheme.onPrimary)),
-        ),
-        backgroundColor: theme.colorScheme.primary,
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-  }
+
+
 }

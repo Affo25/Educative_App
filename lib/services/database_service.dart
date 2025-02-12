@@ -3,12 +3,15 @@ import 'package:educative_app/models/response_data.dart';
 import 'package:educative_app/models/user_data.dart';
 import 'package:educative_app/utils/logger_util.dart';
 import 'package:json_store/json_store.dart';
-
+import 'package:educative_app/app/app.locator.dart';
+import 'package:educative_app/app/app.router.dart';
+import 'package:stacked_services/stacked_services.dart';
 class DatabaseService {
+  final _navigationService = locator<NavigationService>();
   JsonStore jsonStore = JsonStore();
 
   //UserData get _currentUserData => _currentUserData;
-  // late Admin _loggedInAdmin;
+  //late Admin _loggedInAdmin;
 
   UserData get currentUserData => _currentUserData;
   late UserData _currentUserData;
@@ -53,6 +56,11 @@ class DatabaseService {
     }
   }
 
+  void gotoMain()
+  {
+    _navigationService.navigateTo(Routes.dashboardView);
+  }
+
   Future<ResponseData> removeUser() async {
     try {
       logger('removeAdmin: Removing data');
@@ -63,37 +71,10 @@ class DatabaseService {
       logger('removeAdmin: ' + e.toString());
       return ResponseData('ERROR', 'Failed', e.toString());
     }
+
   }
-  //
-  // Future<ResponseData> getUsers() async {
-  //   try {
-  //     logger('getUsers: Fetching data');
-  //     Map<String, dynamic>? json = await jsonStore.getItem('users');
-  //
-  //     List<UserData> userList = [];
-  //     if (json != null) {
-  //
-  //       Map<String, dynamic> userMap = json;
-  //
-  //       var jsonMap = userMap['data'] as List;
-  //
-  //       jsonMap.forEach(
-  //         (data) => {
-  //           userList.add(
-  //             UserData.fromJson(data),
-  //           )
-  //         },
-  //       );
-  //
-  //       return ResponseData('OK', 'Success', userList);
-  //     }
-  //
-  //     return ResponseData('ERROR', 'getUsers: No data found',userList );
-  //   } catch (e) {
-  //     logger('getUsers: ERROR - ' + e.toString());
-  //     return ResponseData('ERROR', 'Failed', e.toString());
-  //   }
-  // }
+
+
 
    Future<bool> checkUser(UserData userData) async {
      try {
@@ -130,7 +111,36 @@ class DatabaseService {
        return false;
     }
    }
-
+//
+// Future<ResponseData> getUsers() async {
+//   try {
+//     logger('getUsers: Fetching data');
+//     Map<String, dynamic>? json = await jsonStore.getItem('users');
+//
+//     List<UserData> userList = [];
+//     if (json != null) {
+//
+//       Map<String, dynamic> userMap = json;
+//
+//       var jsonMap = userMap['data'] as List;
+//
+//       jsonMap.forEach(
+//         (data) => {
+//           userList.add(
+//             UserData.fromJson(data),
+//           )
+//         },
+//       );
+//
+//       return ResponseData('OK', 'Success', userList);
+//     }
+//
+//     return ResponseData('ERROR', 'getUsers: No data found',userList );
+//   } catch (e) {
+//     logger('getUsers: ERROR - ' + e.toString());
+//     return ResponseData('ERROR', 'Failed', e.toString());
+//   }
+// }
   // Future<ResponseData> updateUsers(List<UserData> userList) async {
   //   try {
   //     logger('updateUsers: Updating data');

@@ -1,138 +1,151 @@
 import 'package:educative_app/app_theme.dart';
+import 'package:educative_app/views/aboutapp_view.dart';
+import 'package:educative_app/views/account_settingview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutx/flutx.dart';
-import '../theme/custom_theme.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:educative_app/app/app.locator.dart';
+import 'package:educative_app/app/app.router.dart';
+import 'package:educative_app/services/database_service.dart';
+import '../viewmodels/profile_vm.dart';
+import 'helpview.dart';
+import 'register_view.dart';
+import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+class ProfileScreen extends StatelessWidget {
+  final _databaseService = locator<DatabaseService>();
+  final _navigationService = locator<NavigationService>();
+  final ThemeData themeData = AppTheme.theme;
+  final CustomTheme customTheme = AppTheme.customTheme;
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
-
-  @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  late ThemeData theme;
-  late CustomTheme customTheme;
-
-  @override
-  void initState() {
-    super.initState();
-    theme = AppTheme.theme;
-    customTheme = AppTheme.customTheme;
-  }
-
-  Widget _buildSingleRow({String? title, IconData? icon}) {
-    return Row(
-      children: [
-        FxContainer(
-          paddingAll: 8,
-          borderRadiusAll: 4,
-          color: theme.colorScheme.onBackground.withAlpha(20),
-          child: Icon(
-            icon,
-            color: customTheme.medicarePrimary,
-            size: 20,
-          ),
-        ),
-        FxSpacing.width(16),
-        Expanded(
-          child: FxText.bodySmall(
-            title!,
-            color: Colors.black,
-          ),
-        ),
-        FxSpacing.width(16),
-        Icon(
-          Icons.keyboard_arrow_right,
-          color: theme.colorScheme.onBackground.withAlpha(160),
-        ),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: customTheme.medicareOnPrimary,
-      body: ListView(
-        padding: FxSpacing.fromLTRB(24, 52, 24, 24),
-        children: [
-          Center(
-            child: FxContainer(
-              paddingAll: 0,
-              borderRadiusAll: 24,
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(24),
+    return ViewModelBuilder<ProfileViewModel>.reactive(
+        viewModelBuilder: () => ProfileViewModel(),
+        onViewModelReady: (model) => model.Init(),
+        builder: (context, model, child) =>
+        WillPopScope(
+            onWillPop: () async {
+            return true;
+            },
+      child:Scaffold(
+        body: ListView(
+          padding:
+          FxSpacing.fromLTRB(20, FxSpacing.safeAreaTop(context) + 20, 20, 20),
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                FxContainer.rounded(
+                  paddingAll: 0,
+                  width: 80,
+                  height: 80,
+                  child: Image(
+                      image: AssetImage('assets/images/images.png'),
+                      fit: BoxFit.fill),
                 ),
-                child: Image(
-                  fit: BoxFit.cover,
-                  width: 100,
-                  height: 100,
-                  image: AssetImage(
-                      'assets/images/afaq.jpg',
+                FxSpacing.height(8),
+                FxText.titleMedium(model.currentUser?.Name ?? "",
+                    fontWeight: 600, letterSpacing: 0, color: Colors.black87,),
+              ],
+            ),
+            FxSpacing.height(24),
+            Column(
+              children: <Widget>[
+                GestureDetector(
+                  child:  singleOption(
+                      iconData: MdiIcons.shapeOutline,
+                      option: "Account",
+                      navigation: AccountSettingScreen()),
+                  onTap: (){
+                    _navigationService.navigateTo(Routes.acc_settingview);
+                  },
+                ),
+
+                Divider(),
+                GestureDetector(
+                  child:     singleOption(
+                      iconData: MdiIcons.faceAgent,
+                      option: "Help & Support",
+                    ),
+                  onTap: (){
+                   _navigationService.navigateTo(Routes.helpview);
+                  },
+                ),
+
+                Divider(),
+                GestureDetector(
+                  child: singleOption(
+                      iconData: MdiIcons.creditCardOutline,
+                      option: "About App",
+                      navigation: AboutAppScreen()),
+                  onTap: (){
+                    _navigationService.navigateTo(Routes.about_appview);
+                  },
+                ),
+
+                Divider(),
+                singleOption(
+                    iconData: MdiIcons.contentPaste,
+                    option: "Notification",
+                    navigation: RegisterView()),
+                FxSpacing.height(24),
+                Center(
+                  child: FxButton(
+                    elevation: 0,
+                    backgroundColor: themeData.colorScheme.primary,
+                    borderRadiusAll: 4,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          MdiIcons.logoutVariant,
+                          color: themeData.colorScheme.onPrimary,
+                          size: 18,
+                        ),
+                        FxSpacing.width(16),
+                        FxText.bodySmall("LOGOUT",
+                            letterSpacing: 0.3,
+                            fontWeight: 600,
+                            color: themeData.colorScheme.onPrimary)
+                      ],
+                    ),
+                    onPressed: () {
+                      _databaseService.removeUser();
+                      _navigationService.navigateTo(Routes.loginView);
+                    },
                   ),
                 ),
+              ],
+            )
+          ],
+        ))));
+  }
+
+  Widget singleOption(
+      {IconData? iconData, required String option, Widget? navigation}) {
+    return Container(
+      padding: FxSpacing.y(8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              child: Icon(
+                iconData,
+                size: 22,
+                color: Colors.black,
               ),
             ),
-          ),
-          FxSpacing.height(24),
-          FxText.titleLarge(
-            'Bessie Cooper',
-            textAlign: TextAlign.center,
-            color: Colors.black,
-            fontWeight: 600,
-            letterSpacing: 0.8,
-          ),
-          FxSpacing.height(4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FxContainer.rounded(
-                color: customTheme.medicarePrimary,
-                height: 6,
-                width: 6,
-                child: Container(),
-              ),
-              FxSpacing.width(6),
-              FxText.bodySmall(
-                'Premium (9 days)',
-                color: customTheme.medicarePrimary,
-                muted: true,
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-          FxSpacing.height(24),
-          FxText.bodySmall(
-            'General',
-            color: theme.colorScheme.onBackground,
-            xMuted: true,
-          ),
-          FxSpacing.height(24),
-          _buildSingleRow(
-              title: 'Privacy & Security', icon: FeatherIcons.settings ),
-
-          FxSpacing.height(8),
-
-          Divider(),
-          FxSpacing.height(8),
-          _buildSingleRow(title: 'Account settings', icon: FeatherIcons.user),
-          FxSpacing.height(8),
-          Divider(),
-          FxSpacing.height(8),
-          _buildSingleRow(title: 'Password', icon: FeatherIcons.lock),
-          FxSpacing.height(8),
-          Divider(),
-          FxSpacing.height(8),
-          _buildSingleRow(title: 'Notifications', icon: FeatherIcons.bell),
-          FxSpacing.height(8),
-          Divider(),
-          FxSpacing.height(8),
-          _buildSingleRow(title: 'Logout', icon: FeatherIcons.logOut),
-        ],
-      ),
-    );
+            FxSpacing.width(16),
+            Expanded(
+              child: FxText.bodyLarge(option, fontWeight: 600,color: Colors.black87,),
+            ),
+            Container(
+              child: Icon(MdiIcons.chevronRight,
+                  size: 22, color: Colors.black),
+            ),
+          ],
+        ),
+      );
   }
 }
